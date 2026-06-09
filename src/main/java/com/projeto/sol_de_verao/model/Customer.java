@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projeto.sol_de_verao.model.enums.TypeCustomer;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -29,6 +30,9 @@ public class Customer implements Serializable {
     @Column(name = "credit", nullable = false)
     private Boolean credit;
 
+    @Column(name = "type", nullable = false)
+    private TypeCustomer type;
+
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
@@ -45,12 +49,13 @@ public class Customer implements Serializable {
         this.enabled = true;
     }
 
-    public Customer(Long id, String name, String cpf, String phone, Date dateBirth, Date creationDate) {
+    public Customer(Long id, String name, String cpf, String phone, TypeCustomer type, Date dateBirth, Date creationDate) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
         this.credit = false;
+        this.type = type;
         this.enabled = true;
         this.dateBirth = dateBirth;
         this.creationDate = creationDate;
@@ -96,6 +101,14 @@ public class Customer implements Serializable {
         this.credit = credit;
     }
 
+    public TypeCustomer getType() {
+        return type;
+    }
+
+    public void setType(TypeCustomer type) {
+        this.type = type;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -123,11 +136,11 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Customer customer)) return false;
-        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cpf, customer.cpf) && Objects.equals(phone, customer.phone) && Objects.equals(credit, customer.credit) && Objects.equals(enabled, customer.enabled) && Objects.equals(dateBirth, customer.dateBirth) && Objects.equals(creationDate, customer.creationDate);
+        return Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cpf, customer.cpf) && Objects.equals(phone, customer.phone) && Objects.equals(credit, customer.credit) && type == customer.type && Objects.equals(enabled, customer.enabled) && Objects.equals(dateBirth, customer.dateBirth) && Objects.equals(creationDate, customer.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, cpf, phone, credit, enabled, dateBirth, creationDate);
+        return Objects.hash(id, name, cpf, phone, credit, type, enabled, dateBirth, creationDate);
     }
 }
