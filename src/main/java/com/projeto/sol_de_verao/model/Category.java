@@ -21,6 +21,10 @@ public class Category implements Serializable {
     public Category() {
     }
 
+    public Category(String description) {
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

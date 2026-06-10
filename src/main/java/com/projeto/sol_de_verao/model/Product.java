@@ -30,6 +30,9 @@ public class Product implements Serializable {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
 
+    @Column(name = "inventory", nullable = false)
+    private Integer inventory;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creationDate", nullable = false)
     private Date creationDate;
@@ -38,12 +41,12 @@ public class Product implements Serializable {
         this.enabled = true;
     }
 
-    public Product(Long id, String name, Category category, Double unitPrice, Date creationDate) {
-        this.id = id;
+    public Product(String name, Category category, Double unitPrice, Integer inventory, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
         this.enabled = true;
+        this.inventory = inventory;
         this.creationDate = creationDate;
     }
 
@@ -87,6 +90,14 @@ public class Product implements Serializable {
         this.enabled = enabled;
     }
 
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -98,11 +109,11 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(category, product.category) && Objects.equals(unitPrice, product.unitPrice) && Objects.equals(enabled, product.enabled) && Objects.equals(creationDate, product.creationDate);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(category, product.category) && Objects.equals(unitPrice, product.unitPrice) && Objects.equals(enabled, product.enabled) && Objects.equals(inventory, product.inventory) && Objects.equals(creationDate, product.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, unitPrice, enabled, creationDate);
+        return Objects.hash(id, name, category, unitPrice, enabled, inventory, creationDate);
     }
 }

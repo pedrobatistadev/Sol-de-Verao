@@ -32,8 +32,7 @@ public class Sale implements Serializable {
     public Sale() {
     }
 
-    public Sale(Long id, Customer customer, Employee employee, Date creationDate) {
-        this.id = id;
+    public Sale(Customer customer, Employee employee, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
         this.creationDate = creationDate;

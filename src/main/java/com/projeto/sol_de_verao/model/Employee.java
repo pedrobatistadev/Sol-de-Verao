@@ -41,8 +41,7 @@ public class Employee implements Serializable {
         this.enabled = true;
     }
 
-    public Employee(Long id, String name, String cpf, String phone, Date dateBirth, Date creationDate) {
-        this.id = id;
+    public Employee(String name, String cpf, String phone, Date dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;

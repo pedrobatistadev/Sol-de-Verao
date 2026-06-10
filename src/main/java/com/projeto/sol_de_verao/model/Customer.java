@@ -49,8 +49,7 @@ public class Customer implements Serializable {
         this.enabled = true;
     }
 
-    public Customer(Long id, String name, String cpf, String phone, TypeCustomer type, Date dateBirth, Date creationDate) {
-        this.id = id;
+    public Customer(String name, String cpf, String phone, TypeCustomer type, Date dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
