@@ -26,7 +26,7 @@ public class ProductPurchase implements Serializable {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "totalValue", nullable = false)
+    @Column(name = "total_value", nullable = false)
     private Double totalValue;
 
     public ProductPurchase() {

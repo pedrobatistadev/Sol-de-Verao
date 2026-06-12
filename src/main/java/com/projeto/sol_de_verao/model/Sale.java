@@ -26,7 +26,7 @@ public class Sale implements Serializable {
     private Employee employee;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     public Sale() {

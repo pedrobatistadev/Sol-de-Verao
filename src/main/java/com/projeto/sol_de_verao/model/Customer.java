@@ -37,11 +37,11 @@ public class Customer implements Serializable {
     private Boolean enabled;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "dateBirth", nullable = false)
+    @Column(name = "date_birth", nullable = false)
     private Date dateBirth;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     public Customer() {

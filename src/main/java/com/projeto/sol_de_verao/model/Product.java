@@ -24,7 +24,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(name = "unitPrice", nullable = false)
+    @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 
     @Column(name = "enabled", nullable = false)
@@ -34,7 +34,7 @@ public class Product implements Serializable {
     private Integer inventory;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     public Product() {
