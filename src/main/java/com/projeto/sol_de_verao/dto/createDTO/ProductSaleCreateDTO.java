@@ -1,18 +1,15 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
 import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
-import com.projeto.sol_de_verao.model.Customer;
-import com.projeto.sol_de_verao.model.Employee;
-import com.projeto.sol_de_verao.model.Sale;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ProductSaleCreateDTO {
 
-    private Customer customer;
+    private Long customer;
 
-    private Employee employee;
+    private Long employee;
 
     private List<ProductQuantityDTO> productQuantity;
 
@@ -20,25 +17,25 @@ public class ProductSaleCreateDTO {
     public ProductSaleCreateDTO() {
     }
 
-    public ProductSaleCreateDTO(Customer customer, Employee employee, List<ProductQuantityDTO> productQuantity) {
+    public ProductSaleCreateDTO(Long customer, Long employee, List<ProductQuantityDTO> productQuantity) {
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
     }
 
-    public Customer getCustomer() {
+    public Long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Long customer) {
         this.customer = customer;
     }
 
-    public Employee getEmployee() {
+    public Long getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(Long employee) {
         this.employee = employee;
     }
 
