@@ -30,7 +30,6 @@ public class Purchase implements Serializable {
     private Date creationDate;
 
     public Purchase() {
-
     }
 
     public Purchase(Customer customer, Employee employee, Date creationDate) {

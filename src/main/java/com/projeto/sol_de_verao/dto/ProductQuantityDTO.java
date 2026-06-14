@@ -1,7 +1,5 @@
 package com.projeto.sol_de_verao.dto;
 
-import com.projeto.sol_de_verao.model.Product;
-
 import java.util.Objects;
 
 public class ProductQuantityDTO {

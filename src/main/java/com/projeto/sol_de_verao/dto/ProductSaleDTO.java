@@ -1,8 +1,5 @@
 package com.projeto.sol_de_verao.dto;
 
-import com.projeto.sol_de_verao.model.Customer;
-import com.projeto.sol_de_verao.model.Employee;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
