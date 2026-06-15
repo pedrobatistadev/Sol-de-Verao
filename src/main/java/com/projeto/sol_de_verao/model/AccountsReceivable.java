@@ -15,13 +15,13 @@ public class AccountsReceivable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany
+    @JoinColumn(name = "sale_id", nullable = false)
+    private Sale sale;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
-    @OneToOne
-    @JoinColumn(name = "sale_id", nullable = false)
-    private Sale sale;
 
     @Column(name = "total_value", nullable = false)
     private Double totalValue;

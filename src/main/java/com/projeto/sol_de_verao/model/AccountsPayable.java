@@ -15,13 +15,13 @@ public class AccountsPayable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany
+    @JoinColumn(name = "purchase_id", nullable = false)
+    private Purchase purchase;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
-    @OneToOne
-    @JoinColumn(name = "purchase_id", nullable = false)
-    private Purchase purchase;
 
     @Column(name = "total_value", nullable = false)
     private Double totalValue;
