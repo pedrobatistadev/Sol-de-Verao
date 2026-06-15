@@ -1,5 +1,7 @@
 package com.projeto.sol_de_verao.dto;
 
+import com.projeto.sol_de_verao.model.enums.PaymentMethod;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,8 @@ public class ProductSaleDTO {
 
     private List<ProductQuantityDTO> productQuantity;
 
+    private PaymentMethod paymentMethod;
+
     private Double totalValue;
 
     private Date creationDate;
@@ -21,11 +25,12 @@ public class ProductSaleDTO {
     public ProductSaleDTO() {
     }
 
-    public ProductSaleDTO(Long id, CustomerDTO customer, EmployeeDTO employee, List<ProductQuantityDTO> productQuantity, Double totalValue, Date creationDate) {
+    public ProductSaleDTO(Long id, CustomerDTO customer, EmployeeDTO employee, List<ProductQuantityDTO> productQuantity,PaymentMethod paymentMethod, Double totalValue, Date creationDate) {
         this.id = id;
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
+        this.paymentMethod = paymentMethod;
         this.totalValue = totalValue;
         this.creationDate = creationDate;
     }
@@ -54,12 +59,20 @@ public class ProductSaleDTO {
         this.employee = employee;
     }
 
-    public List<?> getproductQuantity() {
+    public List<ProductQuantityDTO> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setproductQuantity(List<ProductQuantityDTO> productQuantity) {
+    public void setProductQuantity(List<ProductQuantityDTO> productQuantity) {
         this.productQuantity = productQuantity;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public Double getTotalValue() {
@@ -81,11 +94,11 @@ public class ProductSaleDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ProductSaleDTO that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(customer, that.customer) && Objects.equals(employee, that.employee) && Objects.equals(productQuantity, that.productQuantity) && Objects.equals(totalValue, that.totalValue) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(customer, that.customer) && Objects.equals(employee, that.employee) && Objects.equals(productQuantity, that.productQuantity) && paymentMethod == that.paymentMethod && Objects.equals(totalValue, that.totalValue) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, employee, productQuantity, totalValue, creationDate);
+        return Objects.hash(id, customer, employee, productQuantity, paymentMethod, totalValue, creationDate);
     }
 }

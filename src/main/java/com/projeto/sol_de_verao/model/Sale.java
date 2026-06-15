@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,6 +26,10 @@ public class Sale implements Serializable {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
+    private PaymentMethod paymentMethod;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
@@ -32,9 +37,10 @@ public class Sale implements Serializable {
     public Sale() {
     }
 
-    public Sale(Customer customer, Employee employee, Date creationDate) {
+    public Sale(Customer customer, Employee employee, PaymentMethod paymentMethod, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
+        this.paymentMethod = paymentMethod;
         this.creationDate = creationDate;
     }
 
@@ -62,6 +68,14 @@ public class Sale implements Serializable {
         this.employee = employee;
     }
 
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -73,11 +87,11 @@ public class Sale implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Sale sale)) return false;
-        return Objects.equals(id, sale.id) && Objects.equals(customer, sale.customer) && Objects.equals(employee, sale.employee) && Objects.equals(creationDate, sale.creationDate);
+        return Objects.equals(id, sale.id) && Objects.equals(customer, sale.customer) && Objects.equals(employee, sale.employee) && paymentMethod == sale.paymentMethod && Objects.equals(creationDate, sale.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, employee, creationDate);
+        return Objects.hash(id, customer, employee, paymentMethod, creationDate);
     }
 }

@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,6 +26,10 @@ public class Purchase implements Serializable {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
+    private PaymentMethod payment_method;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
@@ -32,9 +37,10 @@ public class Purchase implements Serializable {
     public Purchase() {
     }
 
-    public Purchase(Customer customer, Employee employee, Date creationDate) {
+    public Purchase(Customer customer, Employee employee,PaymentMethod paymentMethod, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
+        this.payment_method = paymentMethod;
         this.creationDate = creationDate;
     }
 
@@ -62,6 +68,14 @@ public class Purchase implements Serializable {
         this.employee = employee;
     }
 
+    public PaymentMethod getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(PaymentMethod payment_method) {
+        this.payment_method = payment_method;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -73,11 +87,11 @@ public class Purchase implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Purchase purchase)) return false;
-        return Objects.equals(id, purchase.id) && Objects.equals(customer, purchase.customer) && Objects.equals(employee, purchase.employee) && Objects.equals(creationDate, purchase.creationDate);
+        return Objects.equals(id, purchase.id) && Objects.equals(customer, purchase.customer) && Objects.equals(employee, purchase.employee) && payment_method == purchase.payment_method && Objects.equals(creationDate, purchase.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, employee, creationDate);
+        return Objects.hash(id, customer, employee, payment_method, creationDate);
     }
 }
