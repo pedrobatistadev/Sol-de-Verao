@@ -2,4 +2,5 @@
 API RESTful Sol de Verão (Comércio Local)
 
 Modelo Lógico
-<img width="1371" height="838" alt="image" src="https://github.com/user-attachments/assets/12eadd8a-a347-482f-b878-ad1812cd241c" />
+<img width="1432" height="838" alt="image" src="https://github.com/user-attachments/assets/964b1375-159d-430e-a98b-54c142be8e64" />
+
