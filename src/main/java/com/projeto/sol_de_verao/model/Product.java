@@ -27,11 +27,15 @@ public class Product implements Serializable {
     @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 
+    @Column(name = "quantity", nullable = false)
+    private Double quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "inventory_id", nullable = false)
+    private Inventory inventory;
+
     @Column(name = "enabled", nullable = false)
     private Boolean enabled;
-
-    @Column(name = "inventory", nullable = false)
-    private Integer inventory;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
@@ -41,12 +45,13 @@ public class Product implements Serializable {
         this.enabled = true;
     }
 
-    public Product(String name, Category category, Double unitPrice, Integer inventory, Date creationDate) {
+    public Product(String name, Category category, Double unitPrice, Double quantity, Inventory inventories, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.inventory = inventories;
         this.enabled = true;
-        this.inventory = inventory;
         this.creationDate = creationDate;
     }
 
@@ -82,20 +87,28 @@ public class Product implements Serializable {
         this.unitPrice = unitPrice;
     }
 
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Inventory getInventories() {
+        return inventory;
+    }
+
+    public void setInventories(Inventory inventories) {
+        this.inventory = inventories;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
     }
 
     public Date getCreationDate() {
@@ -109,11 +122,11 @@ public class Product implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(category, product.category) && Objects.equals(unitPrice, product.unitPrice) && Objects.equals(enabled, product.enabled) && Objects.equals(inventory, product.inventory) && Objects.equals(creationDate, product.creationDate);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(category, product.category) && Objects.equals(unitPrice, product.unitPrice) && Objects.equals(quantity, product.quantity) && Objects.equals(inventory, product.inventory) && Objects.equals(enabled, product.enabled) && Objects.equals(creationDate, product.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, unitPrice, enabled, inventory, creationDate);
+        return Objects.hash(id, name, category, unitPrice, quantity, inventory, enabled, creationDate);
     }
 }
