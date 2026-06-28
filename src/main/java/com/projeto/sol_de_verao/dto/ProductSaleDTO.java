@@ -25,8 +25,7 @@ public class ProductSaleDTO {
     public ProductSaleDTO() {
     }
 
-    public ProductSaleDTO(Long id, CustomerDTO customer, EmployeeDTO employee, List<ProductQuantityDTO> productQuantity,PaymentMethod paymentMethod, Double totalValue, Date creationDate) {
-        this.id = id;
+    public ProductSaleDTO(CustomerDTO customer, EmployeeDTO employee, List<ProductQuantityDTO> productQuantity,PaymentMethod paymentMethod, Double totalValue, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;

@@ -21,11 +21,11 @@ public class EmployeeCreateDTO {
         this.enabled = true;
     }
 
-    public EmployeeCreateDTO(String name, String cpf, String phone, Boolean enabled, Date dateBirth, Date creationDate) {
+    public EmployeeCreateDTO(String name, String cpf, String phone, Date dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
-        this.enabled = enabled;
+        this.enabled = true;
         this.dateBirth = dateBirth;
         this.creationDate = creationDate;
     }

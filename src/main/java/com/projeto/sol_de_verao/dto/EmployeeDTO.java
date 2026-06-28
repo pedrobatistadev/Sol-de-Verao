@@ -9,8 +9,6 @@ public class EmployeeDTO {
 
     private String name;
 
-    private String phone;
-
     private Boolean enabled;
 
     private Date creationDate;
@@ -19,9 +17,8 @@ public class EmployeeDTO {
         this.enabled = true;
     }
 
-    public EmployeeDTO(String name, String phone, Boolean enabled, Date creationDate) {
+    public EmployeeDTO(String name, Boolean enabled, Date creationDate) {
         this.name = name;
-        this.phone = phone;
         this.enabled = enabled;
         this.creationDate = creationDate;
     }
@@ -40,14 +37,6 @@ public class EmployeeDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Boolean getEnabled() {
@@ -69,11 +58,11 @@ public class EmployeeDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof EmployeeDTO that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(phone, that.phone) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, enabled, creationDate);
+        return Objects.hash(id, name, enabled, creationDate);
     }
 }

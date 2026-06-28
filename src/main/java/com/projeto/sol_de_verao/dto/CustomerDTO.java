@@ -11,8 +11,6 @@ public class CustomerDTO {
 
     private String name;
 
-    private String phone;
-
     private Boolean credit;
 
     private TypeCustomer type;
@@ -25,9 +23,8 @@ public class CustomerDTO {
         this.enabled = true;
     }
 
-    public CustomerDTO(String name, String phone, Boolean credit, TypeCustomer type, Boolean enabled, Date creationDate) {
+    public CustomerDTO(String name, Boolean credit, TypeCustomer type, Boolean enabled, Date creationDate) {
         this.name = name;
-        this.phone = phone;
         this.credit = credit;
         this.type = type;
         this.enabled = enabled;
@@ -48,14 +45,6 @@ public class CustomerDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Boolean getCredit() {
@@ -93,11 +82,11 @@ public class CustomerDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CustomerDTO that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(phone, that.phone) && Objects.equals(credit, that.credit) && type == that.type && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(credit, that.credit) && type == that.type && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, phone, credit, type, enabled, creationDate);
+        return Objects.hash(id, name, credit, type, enabled, creationDate);
     }
 }

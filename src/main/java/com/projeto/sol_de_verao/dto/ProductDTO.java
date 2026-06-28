@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.dto;
 
 import com.projeto.sol_de_verao.model.Category;
+import com.projeto.sol_de_verao.model.Inventory;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -16,9 +17,9 @@ public class ProductDTO {
 
     private Double unitPrice;
 
-    private Boolean enabled;
+    private Inventory inventory;
 
-    private Integer inventory;
+    private Boolean enabled;
 
     private Date creationDate;
 
@@ -26,12 +27,12 @@ public class ProductDTO {
         this.enabled = true;
     }
 
-    public ProductDTO(String name, Category category, Double unitPrice, Boolean enabled, Integer inventory, Date creationDate) {
+    public ProductDTO(String name, Category category, Double unitPrice, Inventory inventory, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
-        this.enabled = enabled;
         this.inventory = inventory;
+        this.enabled = true;
         this.creationDate = creationDate;
     }
 
@@ -67,20 +68,20 @@ public class ProductDTO {
         this.unitPrice = unitPrice;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
     }
 
     public Date getCreationDate() {
@@ -94,11 +95,11 @@ public class ProductDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ProductDTO that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(enabled, that.enabled) && Objects.equals(inventory, that.inventory) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(inventory, that.inventory) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, unitPrice, enabled, inventory, creationDate);
+        return Objects.hash(id, name, category, unitPrice, inventory, enabled, creationDate);
     }
 }

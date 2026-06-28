@@ -26,13 +26,13 @@ public class CustomerCreateDTO {
         this.enabled = true;
     }
 
-    public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, Boolean enabled, Date dateBirth, Date creationDate) {
+    public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, Date dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
         this.credit = credit;
         this.type = type;
-        this.enabled = enabled;
+        this.enabled = true;
         this.dateBirth = dateBirth;
         this.creationDate = creationDate;
     }
