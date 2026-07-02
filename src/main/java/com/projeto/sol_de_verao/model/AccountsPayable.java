@@ -16,7 +16,7 @@ public class AccountsPayable implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 
