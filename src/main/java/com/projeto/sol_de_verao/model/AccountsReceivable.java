@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,24 +21,28 @@ public class AccountsReceivable implements Serializable {
     @JoinColumn(name = "sale_id", nullable = false)
     private Sale sale;
 
-    @Column(name = "installment_number")
+    @Column(name = "installment_number", nullable = false)
     private Integer installmentNumber;
+
+    @Column(name = "payment")
+    private Date payment;
 
     @Column(name = "total_value", nullable = false)
     private Double totalValue;
 
     @Column(name = "due_date", nullable = false)
-    private Date dueDate;
+    private LocalDate dueDate;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
     public AccountsReceivable() {
     }
 
-    public AccountsReceivable(Sale sale, Integer installmentNumber, Double totalValue, Date dueDate, Date creationDate) {
+    public AccountsReceivable(Sale sale, Integer installmentNumber, Date payment, Double totalValue, LocalDate dueDate, Date creationDate) {
         this.sale = sale;
         this.installmentNumber = installmentNumber;
+        this.payment = payment;
         this.totalValue = totalValue;
         this.dueDate = dueDate;
         this.creationDate = creationDate;
@@ -67,6 +72,14 @@ public class AccountsReceivable implements Serializable {
         this.installmentNumber = installmentNumber;
     }
 
+    public Date getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Date payment) {
+        this.payment = payment;
+    }
+
     public Double getTotalValue() {
         return totalValue;
     }
@@ -75,11 +88,11 @@ public class AccountsReceivable implements Serializable {
         this.totalValue = totalValue;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -94,11 +107,11 @@ public class AccountsReceivable implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof AccountsReceivable that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(sale, that.sale) && Objects.equals(installmentNumber, that.installmentNumber) && Objects.equals(totalValue, that.totalValue) && Objects.equals(dueDate, that.dueDate) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(sale, that.sale) && Objects.equals(installmentNumber, that.installmentNumber) && Objects.equals(payment, that.payment) && Objects.equals(totalValue, that.totalValue) && Objects.equals(dueDate, that.dueDate) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sale, installmentNumber, totalValue, dueDate, creationDate);
+        return Objects.hash(id, sale, installmentNumber, payment, totalValue, dueDate, creationDate);
     }
 }
