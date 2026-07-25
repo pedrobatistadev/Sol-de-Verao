@@ -38,12 +38,10 @@ public class CategoryService {
 
         validation(categoryCreateDTO);
 
-
         Category category = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         category.setDescription(categoryCreateDTO.getDescription());
 
         return ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
-
     }
 
     public CategoryDTO findById(Long id) {
