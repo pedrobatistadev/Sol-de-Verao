@@ -23,6 +23,21 @@ CREATE TABLE Customers (
                            CONSTRAINT uk_customers_cpf UNIQUE (cpf)
 );
 
+CREATE TABLE Customers_Log (
+                              id BIGINT NOT NULL AUTO_INCREMENT,
+                              customer_id BIGINT NOT NULL,
+                              action VARCHAR(255) NOT NULL,
+                              description VARCHAR(255) NOT NULL,
+                              creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                              PRIMARY KEY (id),
+
+                              CONSTRAINT fk_customers_log_customers
+                                  FOREIGN KEY (customer_id)
+                                      REFERENCES Customers(id)
+);
+
+
 CREATE TABLE Employees (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
                            name VARCHAR(45) NOT NULL,
@@ -52,6 +67,20 @@ CREATE TABLE Products (
                           CONSTRAINT fk_products_inventories
                               FOREIGN KEY (inventory_id)
                                   REFERENCES Inventories(id)
+);
+
+CREATE TABLE Products_Log (
+                              id BIGINT NOT NULL AUTO_INCREMENT,
+                              product_id BIGINT NOT NULL,
+                              action VARCHAR(255) NOT NULL,
+                              description VARCHAR(255) NOT NULL,
+                              creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+                              PRIMARY KEY (id),
+
+                              CONSTRAINT fk_products_log_product
+                                  FOREIGN KEY (product_id)
+                                      REFERENCES products(id)
 );
 
 CREATE TABLE Sales (
@@ -122,6 +151,7 @@ CREATE TABLE Accounts_Receivable (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      sale_id BIGINT NOT NULL,
                                      installment_number INT NOT NULL,
+                                     payment DATE,
                                      total_value DECIMAL(10,2) NOT NULL,
                                      due_date DATE NOT NULL,
                                      creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -135,6 +165,7 @@ CREATE TABLE Accounts_Payable (
                                   id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                   purchase_id BIGINT NOT NULL,
                                   installment_number INT NOT NULL,
+                                  payment DATE,
                                   total_value DECIMAL(10,2) NOT NULL,
                                   due_date DATE NOT NULL,
                                   creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
