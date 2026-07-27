@@ -28,7 +28,7 @@ public class Product implements Serializable {
     private Double unitPrice;
 
     @Column(name = "quantity", nullable = false)
-    private Double quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "inventory_id", nullable = false)
@@ -45,7 +45,7 @@ public class Product implements Serializable {
         this.enabled = true;
     }
 
-    public Product(String name, Category category, Double unitPrice, Double quantity, Inventory inventories, Date creationDate) {
+    public Product(String name, Category category, Double unitPrice, Integer quantity, Inventory inventories, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
@@ -53,6 +53,14 @@ public class Product implements Serializable {
         this.inventory = inventories;
         this.enabled = true;
         this.creationDate = creationDate;
+    }
+
+    public Product(String name, Category category, Double unitPrice, Integer quantity, Inventory inventory) {
+        this.name = name;
+        this.category = category;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.inventory = inventory;
     }
 
     public Long getId() {
@@ -87,19 +95,19 @@ public class Product implements Serializable {
         this.unitPrice = unitPrice;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public Inventory getInventories() {
+    public Inventory getInventory() {
         return inventory;
     }
 
-    public void setInventories(Inventory inventories) {
+    public void setInventory(Inventory inventories) {
         this.inventory = inventories;
     }
 

@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.enums.TypeCustomer;
 import jakarta.persistence.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class Customer implements Serializable {
     @Column(name = "credit", nullable = false)
     private Boolean credit;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private TypeCustomer type;
 
@@ -58,6 +60,15 @@ public class Customer implements Serializable {
         this.enabled = true;
         this.dateBirth = dateBirth;
         this.creationDate = creationDate;
+    }
+
+    public Customer(String name, String cpf, String phone, Boolean credit, TypeCustomer type, Date dateBirth) {
+        this.name = name;
+        this.cpf = cpf;
+        this.phone = phone;
+        this.credit = credit;
+        this.type = type;
+        this.dateBirth = dateBirth;
     }
 
     public Long getId() {
@@ -130,6 +141,13 @@ public class Customer implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "type=" + type +
+                '}';
     }
 
     @Override
