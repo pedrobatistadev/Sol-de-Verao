@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,16 +34,16 @@ public class InventoryService {
 
     }
 
-    public InventoryDTO update(Long id, InventoryCreateDTO InventoryCreateDTO) {
+    public InventoryDTO update(Long id, InventoryCreateDTO inventoryCreateDTO) {
 
         logger.warn("Updating Inventory !");
 
-        validation(InventoryCreateDTO);
+        validation(inventoryCreateDTO);
 
-        Inventory Inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
-        Inventory.setDescription(InventoryCreateDTO.getDescription());
+        Inventory inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+        inventory.setDescription(inventoryCreateDTO.getDescription());
 
-        return ObjectMapper.parseObject(repository.save(Inventory), InventoryDTO.class);
+        return ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
     }
 
     public InventoryDTO findById(Long id) {
@@ -65,8 +66,13 @@ public class InventoryService {
 
         logger.warn("Deleting Inventory");
 
-        Inventory Inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
-        repository.delete(Inventory);
+        Inventory inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        try {
+            repository.delete(inventory);
+        } catch (Exception e) {
+            throw new DataIntegrityViolationException("This action is not possible because this inventory is currently in use.");
+        }
     }
     
     private void validation(InventoryCreateDTO inventoryCreateDTO) {
@@ -74,6 +80,5 @@ public class InventoryService {
             throw new IllegalArgumentException("The description field cannot be empty.");
         }
     }
-
 
 }

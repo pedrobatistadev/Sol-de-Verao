@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,7 +66,12 @@ public class CategoryService {
         logger.warn("Deleting Category");
 
         Category category = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
-        repository.delete(category);
+
+        try {
+            repository.delete(category);
+        } catch(Exception e) {
+            throw new DataIntegrityViolationException("This action is not possible because this category is currently in use.");
+        }
     }
 
     private void validation(CategoryCreateDTO categoryCreateDTO) {

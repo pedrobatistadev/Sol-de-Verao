@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,6 +29,8 @@ public class EmployeeService {
         validation(employeeCreateDTO);
 
         Employee employee = ObjectMapper.parseObject(employeeCreateDTO, Employee.class);
+        employee.setEnabled(true);
+        employee.setCreationDate(new Date());
 
         return ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
 
@@ -43,9 +46,7 @@ public class EmployeeService {
         employee.setName(employeeCreateDTO.getName());
         employee.setCpf(employeeCreateDTO.getCpf());
         employee.setPhone(employeeCreateDTO.getPhone());
-        employee.setEnabled(employeeCreateDTO.getEnabled());
         employee.setDateBirth(employeeCreateDTO.getDateBirth());
-        employee.setCreationDate(employeeCreateDTO.getCreationDate());
 
         return ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
     }
@@ -59,7 +60,7 @@ public class EmployeeService {
 
     public List<EmployeeDTO> findAll() {
 
-        logger.warn("Finding All Employee");
+        logger.warn("Finding All Employees");
 
         List<Employee> categories = repository.findAll();
 
@@ -71,7 +72,12 @@ public class EmployeeService {
         logger.warn("Deleting Employee");
 
         Employee employee = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
-        repository.delete(employee);
+
+        try {
+            repository.delete(employee);
+        } catch(Exception e) {
+            throw new DataIntegrityViolationException("This action is not possible because this employee is currently in use.");
+        }
     }
 
     private void validation(EmployeeCreateDTO employeeCreateDTO) {
@@ -84,17 +90,11 @@ public class EmployeeService {
         } else if (employeeCreateDTO.getPhone() == null || employeeCreateDTO.getPhone() == "") {
             throw new IllegalArgumentException("The phone field cannot be empty.");
 
-        } else if (employeeCreateDTO.getEnabled() == null) {
-            throw new IllegalArgumentException("The enabled field cannot be empty.");
-
         } else if (employeeCreateDTO.getDateBirth() == null) {
             throw new IllegalArgumentException("The date birth field cannot be empty.");
 
         } else if (employeeCreateDTO.getDateBirth().after(new Date())) {
             throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
-
-        } else if (employeeCreateDTO.getCreationDate() == null) {
-            throw new IllegalArgumentException("The creation date field cannot be empty.");
         }
     }
 }
