@@ -22,6 +22,6 @@ public class CustomResponseHandler {
         String data = sdf.format(new Date());
         ExceptionResponse response = new ExceptionResponse(ex.getMessage(),request.getDescription(false), data);
 
-        return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
