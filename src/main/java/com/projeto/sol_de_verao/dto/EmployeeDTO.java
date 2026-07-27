@@ -1,5 +1,7 @@
 package com.projeto.sol_de_verao.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class EmployeeDTO {
 
     private Boolean enabled;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
 
     public EmployeeDTO() {

@@ -1,5 +1,6 @@
 package com.projeto.sol_de_verao.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.enums.TypeCustomer;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class CustomerDTO {
 
     private Boolean enabled;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
 
     public CustomerDTO() {

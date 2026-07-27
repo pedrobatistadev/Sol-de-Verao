@@ -1,5 +1,6 @@
 package com.projeto.sol_de_verao.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ public class ProductSaleDTO {
 
     private Double totalValue;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date creationDate;
 
     public ProductSaleDTO() {

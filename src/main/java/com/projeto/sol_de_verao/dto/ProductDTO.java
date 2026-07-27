@@ -1,5 +1,6 @@
 package com.projeto.sol_de_verao.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.Category;
 import com.projeto.sol_de_verao.model.Inventory;
 import jakarta.persistence.*;
@@ -17,20 +18,24 @@ public class ProductDTO {
 
     private Double unitPrice;
 
+    private Integer quantity;
+
     private Inventory inventory;
 
     private Boolean enabled;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
 
     public ProductDTO() {
         this.enabled = true;
     }
 
-    public ProductDTO(String name, Category category, Double unitPrice, Inventory inventory, Date creationDate) {
+    public ProductDTO(String name, Category category, Double unitPrice,Integer quantity, Inventory inventory, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
+        this.quantity = quantity;
         this.inventory = inventory;
         this.enabled = true;
         this.creationDate = creationDate;
@@ -68,6 +73,14 @@ public class ProductDTO {
         this.unitPrice = unitPrice;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -95,11 +108,11 @@ public class ProductDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ProductDTO that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(inventory, that.inventory) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(quantity, that.quantity) && Objects.equals(inventory, that.inventory) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, unitPrice, inventory, enabled, creationDate);
+        return Objects.hash(id, name, category, unitPrice, quantity, inventory, enabled, creationDate);
     }
 }
