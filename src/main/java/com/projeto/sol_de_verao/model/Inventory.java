@@ -42,6 +42,14 @@ public class Inventory implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Inventory{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof Inventory that)) return false;
         return Objects.equals(id, that.id) && Objects.equals(description, that.description);
