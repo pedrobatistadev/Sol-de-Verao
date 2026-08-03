@@ -1,6 +1,9 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.enums.TypeCustomer;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,25 +19,16 @@ public class CustomerCreateDTO {
 
     private TypeCustomer type;
 
-    private Boolean enabled;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dateBirth;
 
-    private Date dateBirth;
-
-    private Date creationDate;
-
-    public CustomerCreateDTO() {
-        this.enabled = true;
-    }
-
-    public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, Date dateBirth, Date creationDate) {
+    public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, LocalDate dateBirth) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
         this.credit = credit;
         this.type = type;
-        this.enabled = true;
         this.dateBirth = dateBirth;
-        this.creationDate = creationDate;
     }
 
     public String getName() {
@@ -77,38 +71,22 @@ public class CustomerCreateDTO {
         this.type = type;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CustomerCreateDTO that)) return false;
-        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && Objects.equals(credit, that.credit) && type == that.type && Objects.equals(enabled, that.enabled) && Objects.equals(dateBirth, that.dateBirth) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && Objects.equals(credit, that.credit) && type == that.type && Objects.equals(dateBirth, that.dateBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cpf, phone, credit, type, enabled, dateBirth, creationDate);
+        return Objects.hash(name, cpf, phone, credit, type, dateBirth);
     }
 }

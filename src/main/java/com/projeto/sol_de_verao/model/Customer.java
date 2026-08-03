@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -40,7 +41,7 @@ public class Customer implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date_birth", nullable = false)
-    private Date dateBirth;
+    private LocalDate dateBirth;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
@@ -51,7 +52,7 @@ public class Customer implements Serializable {
         this.enabled = true;
     }
 
-    public Customer(String name, String cpf, String phone, TypeCustomer type, Date dateBirth, Date creationDate) {
+    public Customer(String name, String cpf, String phone, TypeCustomer type, LocalDate dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
@@ -62,7 +63,7 @@ public class Customer implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Customer(String name, String cpf, String phone, Boolean credit, TypeCustomer type, Date dateBirth) {
+    public Customer(String name, String cpf, String phone, Boolean credit, TypeCustomer type, LocalDate dateBirth) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
@@ -127,11 +128,11 @@ public class Customer implements Serializable {
         this.enabled = enabled;
     }
 
-    public Date getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
 
