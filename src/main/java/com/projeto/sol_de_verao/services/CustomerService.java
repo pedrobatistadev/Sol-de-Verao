@@ -13,6 +13,7 @@ import com.projeto.sol_de_verao.repository.CustomerLogRepository;
 import com.projeto.sol_de_verao.repository.CustomerRepository;
 import com.projeto.sol_de_verao.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +105,20 @@ public class CustomerService {
         return ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
     }
 
+    @Transactional
+    public CustomerDTO disable(Long id) {
+
+        logger.warn("Disabling Customer");
+
+        repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+        repository.disable(id);
+
+        Customer customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        repositoryLog.save(new Customers_Log(customer,Actions.PATCH,"Disable customer " + customer.getName(), new Date()));
+        return ObjectMapper.parseObject(customer, CustomerDTO.class);
+    }
+
     public CustomerDTO findById(Long id) {
 
         logger.warn("Finding Customer !");
@@ -129,6 +146,8 @@ public class CustomerService {
         } catch(Exception e) {
             throw new DataIntegrityViolationException("This action is not possible because this customer is currently in use.");
         }
+
+        repositoryLog.save(new Customers_Log(customer,Actions.DELETE, "Customer " + customer.getName() + " delected successful", new Date()));
     }
 
     private void validation(CustomerCreateDTO customerCreateDTO) {
@@ -150,7 +169,7 @@ public class CustomerService {
         } else if (customerCreateDTO.getDateBirth() == null) {
             throw new IllegalArgumentException("The date birth field cannot be empty.");
 
-        } else if (customerCreateDTO.getDateBirth().after(new Date())) {
+        } else if (customerCreateDTO.getDateBirth().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
         }
     }

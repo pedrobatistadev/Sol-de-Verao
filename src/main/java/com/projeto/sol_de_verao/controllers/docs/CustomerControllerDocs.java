@@ -35,5 +35,9 @@ public interface CustomerControllerDocs {
     @Operation(summary = "Updating Customer", description = "Updating Customer", tags = {"Customer"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200")})
     ResponseEntity<CustomerDTO> update(@PathVariable Long id, @RequestBody CustomerCreateDTO CustomerCreateDTO);
+
+    @Operation(summary = "Disable Customer", description = "Disabling Customer", tags = {"Customer"}, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
+    ResponseEntity<CustomerDTO> disable(@PathVariable Long id);
     
 }

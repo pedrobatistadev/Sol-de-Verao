@@ -24,8 +24,8 @@ public class CustomerController implements CustomerControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<CustomerDTO> create(@RequestBody CustomerCreateDTO customer) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(customer));
+    public ResponseEntity<CustomerDTO> create(@RequestBody CustomerCreateDTO customerCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(customerCreateDTO));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -38,6 +38,12 @@ public class CustomerController implements CustomerControllerDocs {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<CustomerDTO> update(@PathVariable Long id, @RequestBody CustomerCreateDTO customerCreateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, customerCreateDTO));
+    }
+
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
+    public ResponseEntity<CustomerDTO> disable(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.disable(id));
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
