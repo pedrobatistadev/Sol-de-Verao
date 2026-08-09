@@ -42,6 +42,12 @@ public class ProductController implements ProductControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, productCreateDTO));
     }
 
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
+    public ResponseEntity<ProductDTO> disable(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.disable(id));
+    }
+
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<ProductDTO>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());

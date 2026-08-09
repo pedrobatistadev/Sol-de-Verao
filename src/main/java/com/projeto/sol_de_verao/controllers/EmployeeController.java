@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/v1/Employee")
+@RequestMapping(value = "/v1/employee")
 public class EmployeeController implements EmployeeControllerDocs {
 
     @Autowired
@@ -24,8 +24,8 @@ public class EmployeeController implements EmployeeControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<EmployeeDTO> create(@RequestBody EmployeeCreateDTO Employee) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(Employee));
+    public ResponseEntity<EmployeeDTO> create(@RequestBody EmployeeCreateDTO employee) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(employee));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -36,16 +36,25 @@ public class EmployeeController implements EmployeeControllerDocs {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO EmployeeCreateDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, EmployeeCreateDTO));
+    @Override
+    public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO employeeCreateDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, employeeCreateDTO));
+    }
+
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
+    public ResponseEntity<EmployeeDTO> disable(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.disable(id));
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
     public ResponseEntity<List<EmployeeDTO>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
     @DeleteMapping(value = "/{id}")
+    @Override
     public ResponseEntity<?> delete (@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
