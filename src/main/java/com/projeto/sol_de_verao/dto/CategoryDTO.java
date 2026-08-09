@@ -1,8 +1,13 @@
 package com.projeto.sol_de_verao.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CategoryDTO {
+public class CategoryDTO extends RepresentationModel<CategoryDTO> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

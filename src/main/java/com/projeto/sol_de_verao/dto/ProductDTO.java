@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.Category;
 import com.projeto.sol_de_verao.model.Inventory;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class ProductDTO {
+public class ProductDTO extends RepresentationModel<ProductDTO> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

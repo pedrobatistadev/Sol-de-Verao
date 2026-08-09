@@ -2,12 +2,16 @@ package com.projeto.sol_de_verao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
+import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ProductPurchaseDTO {
+public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 
