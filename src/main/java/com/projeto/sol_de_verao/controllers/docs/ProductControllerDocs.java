@@ -1,5 +1,6 @@
 package com.projeto.sol_de_verao.controllers.docs;
 
+import com.projeto.sol_de_verao.dto.EmployeeDTO;
 import com.projeto.sol_de_verao.dto.ProductDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,4 +36,8 @@ public interface ProductControllerDocs {
     @Operation(summary = "Updating Product", description = "Updating Product", tags = {"Product"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200")})
     ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductCreateDTO productCreateDTO);
+
+    @Operation(summary = "Disabling Product", description = "Disabling Product", tags = {"Product"}, responses = {
+            @ApiResponse(description = "Success", responseCode = "200")})
+    ResponseEntity<ProductDTO> disable(@PathVariable Long id);
 }

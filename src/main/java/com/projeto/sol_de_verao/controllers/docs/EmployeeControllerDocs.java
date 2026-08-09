@@ -35,4 +35,8 @@ public interface EmployeeControllerDocs {
     @Operation(summary = "Updating Employee", description = "Updating Employee", tags = {"Employee"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200")})
     ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO EmployeeCreateDTO);
+
+    @Operation(summary = "Disabling Employee", description = "Disabling Employee", tags = {"Employee"}, responses = {
+            @ApiResponse(description = "Success", responseCode = "200")})
+    ResponseEntity<EmployeeDTO> disable(@PathVariable Long id);
 }
