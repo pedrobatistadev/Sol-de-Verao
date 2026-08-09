@@ -1,10 +1,15 @@
 package com.projeto.sol_de_verao.services;
+import com.projeto.sol_de_verao.controllers.CategoryController;
+import com.projeto.sol_de_verao.controllers.EmployeeController;
+import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.EmployeeDTO;
+import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.EmployeeCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Employee;
 import com.projeto.sol_de_verao.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class EmployeeService {
@@ -32,7 +40,11 @@ public class EmployeeService {
         employee.setEnabled(true);
         employee.setCreationDate(new Date());
 
-        return ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
+
+        Hateoas(result);
+
+        return result;
 
     }
 
@@ -48,14 +60,40 @@ public class EmployeeService {
         employee.setPhone(employeeCreateDTO.getPhone());
         employee.setDateBirth(employeeCreateDTO.getDateBirth());
 
-        return ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(employee), EmployeeDTO.class);
+
+        Hateoas(result);
+
+        return result;
+    }
+
+    @Transactional
+    public EmployeeDTO disable(Long id) {
+
+        logger.warn("Disabling Employee !");
+
+        repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        repository.disable(id);
+
+        Employee employee = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        var result = ObjectMapper.parseObject(employee, EmployeeDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public EmployeeDTO findById(Long id) {
 
         logger.warn("Finding Employee !");
 
-        return ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), EmployeeDTO.class);
+        var result = ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), EmployeeDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public List<EmployeeDTO> findAll() {
@@ -64,7 +102,11 @@ public class EmployeeService {
 
         List<Employee> categories = repository.findAll();
 
-        return ObjectMapper.parseList(categories, EmployeeDTO.class);
+        var result = ObjectMapper.parseList(categories, EmployeeDTO.class);
+
+        result.forEach(this::Hateoas);
+
+        return result;
     }
 
     public void delete(Long id) {
@@ -96,5 +138,18 @@ public class EmployeeService {
         } else if (employeeCreateDTO.getDateBirth().after(new Date())) {
             throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
         }
+    }
+
+    private void Hateoas(EmployeeDTO employeeDTO) {
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).create(ObjectMapper.parseObject(employeeDTO, EmployeeCreateDTO.class)))
+                .withRel("create").withType("POST"));
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).update(employeeDTO.getId(),ObjectMapper.parseObject(employeeDTO, EmployeeCreateDTO.class)))
+                .withRel("update").withType("PUT"));
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).findById(employeeDTO.getId()))
+                .withSelfRel().withType(" GET"));
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).findAll())
+                .withRel("findAll").withType("GET"));
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).delete(employeeDTO.getId()))
+                .withRel("delete").withType("DELETE"));
     }
 }

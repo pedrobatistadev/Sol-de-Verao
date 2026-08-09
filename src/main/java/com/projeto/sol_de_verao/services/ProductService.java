@@ -1,18 +1,21 @@
 package com.projeto.sol_de_verao.services;
 
+import com.projeto.sol_de_verao.controllers.InventoryController;
+import com.projeto.sol_de_verao.controllers.ProductController;
+import com.projeto.sol_de_verao.dto.EmployeeDTO;
+import com.projeto.sol_de_verao.dto.InventoryDTO;
 import com.projeto.sol_de_verao.dto.ProductDTO;
+import com.projeto.sol_de_verao.dto.createDTO.InventoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
-import com.projeto.sol_de_verao.model.Category;
-import com.projeto.sol_de_verao.model.Inventory;
-import com.projeto.sol_de_verao.model.Product;
-import com.projeto.sol_de_verao.model.Product_Log;
+import com.projeto.sol_de_verao.model.*;
 import com.projeto.sol_de_verao.model.enums.Actions;
 import com.projeto.sol_de_verao.repository.CategoryRepository;
 import com.projeto.sol_de_verao.repository.InventoryRepository;
 import com.projeto.sol_de_verao.repository.ProductLogRepository;
 import com.projeto.sol_de_verao.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ProductService {
@@ -60,7 +66,11 @@ public class ProductService {
 
         repositoryLog.save(new Product_Log(saved, Actions.CREATE, saved.getName() + " successfully created !", new Date()));
 
-        return ObjectMapper.parseObject(saved, ProductDTO.class);
+        var result = ObjectMapper.parseObject(saved, ProductDTO.class);
+
+        Hateoas(result);
+
+        return result;
 
     }
 
@@ -108,14 +118,42 @@ public class ProductService {
             repositoryLog.save(new Product_Log(product, Actions.UPDATE, "Inventory changed from " + oldProduct.getInventory().getDescription() + " to " + newProduct.getInventory().getDescription(), new Date()));
         }
 
-        return ObjectMapper.parseObject(repository.save(product), ProductDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(product), ProductDTO.class);
+
+        Hateoas(result);
+
+        return result;
+    }
+
+    @Transactional
+    public ProductDTO disable(Long id) {
+
+        logger.warn("Disabling Product !");
+
+        repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        repository.disable(id);
+
+        Product product = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        repositoryLog.save(new Product_Log(product,Actions.PATCH, "Disable product " + product.getName(),new Date()));
+
+        var result = ObjectMapper.parseObject(product, ProductDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public ProductDTO findById(Long id) {
 
         logger.warn("Finding Product !");
 
-        return ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), ProductDTO.class);
+        var result = ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), ProductDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public List<ProductDTO> findAll() {
@@ -124,7 +162,11 @@ public class ProductService {
 
         List<Product> categories = repository.findAll();
 
-        return ObjectMapper.parseList(categories, ProductDTO.class);
+        var result = ObjectMapper.parseList(categories, ProductDTO.class);
+
+        result.forEach(this::Hateoas);
+
+        return result;
     }
 
     public void delete(Long id) {
@@ -138,6 +180,8 @@ public class ProductService {
         } catch(Exception e) {
             throw new DataIntegrityViolationException("This action is not possible because this product is currently in use.");
         }
+
+        repositoryLog.save(new Product_Log(product,Actions.DELETE, "Product " + product.getName() + " delected successful", new Date()));
     }
 
     private void validation(ProductCreateDTO productCreateDTO) {
@@ -163,5 +207,20 @@ public class ProductService {
             throw new IllegalArgumentException("The inventory field cannot be empty.");
 
         }
+    }
+
+    private void Hateoas(ProductDTO productDTO) {
+        productDTO.add(linkTo(methodOn(ProductController.class).create(ObjectMapper.parseObject(productDTO, ProductCreateDTO.class)))
+                .withRel("create").withType("POST"));
+        productDTO.add(linkTo(methodOn(ProductController.class).update(productDTO.getId(),ObjectMapper.parseObject(productDTO, ProductCreateDTO.class)))
+                .withRel("update").withType("PUT"));
+        productDTO.add(linkTo(methodOn(ProductController.class))
+                .withRel("disable").withType("PATCH"));
+        productDTO.add(linkTo(methodOn(ProductController.class).findById(productDTO.getId()))
+                .withSelfRel().withType(" GET"));
+        productDTO.add(linkTo(methodOn(ProductController.class).findAll())
+                .withRel("findAll").withType("GET"));
+        productDTO.add(linkTo(methodOn(ProductController.class).delete(productDTO.getId()))
+                .withRel("delete").withType("DELETE"));
     }
 }

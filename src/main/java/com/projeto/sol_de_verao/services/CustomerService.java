@@ -1,7 +1,11 @@
 package com.projeto.sol_de_verao.services;
 
+import com.projeto.sol_de_verao.controllers.CategoryController;
+import com.projeto.sol_de_verao.controllers.CustomerController;
+import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.CustomerDTO;
 import com.projeto.sol_de_verao.dto.CustomerDTO;
+import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CustomerCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CustomerCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
@@ -19,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +32,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class CustomerService {
@@ -56,7 +65,11 @@ public class CustomerService {
 
         repositoryLog.save(new Customers_Log(saved, Actions.CREATE,saved.getName() + " successfully created !",new Date()));
 
-        return ObjectMapper.parseObject(saved, CustomerDTO.class);
+        var result = ObjectMapper.parseObject(saved, CustomerDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public CustomerDTO update(Long id, CustomerCreateDTO customerCreateDTO) {
@@ -102,7 +115,11 @@ public class CustomerService {
             repositoryLog.save(new Customers_Log(customer,Actions.UPDATE, "Date Birth changed from " + sdf1.format(oldCustomer.getDateBirth()) + " to " + sdf1.format(newCustomer.getDateBirth()), new Date()));
         }
 
-        return ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     @Transactional
@@ -116,23 +133,37 @@ public class CustomerService {
         Customer customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
 
         repositoryLog.save(new Customers_Log(customer,Actions.PATCH,"Disable customer " + customer.getName(), new Date()));
-        return ObjectMapper.parseObject(customer, CustomerDTO.class);
+        var result = ObjectMapper.parseObject(customer, CustomerDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public CustomerDTO findById(Long id) {
 
         logger.warn("Finding Customer !");
 
-        return ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), CustomerDTO.class);
+        var result = ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), CustomerDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
-    public List<CustomerDTO> findAll() {
+    public Page<CustomerDTO> findAll(Pageable pageable) {
 
         logger.warn("Finding All Customers");
 
-        List<Customer> customers = repository.findAll();
+        Page<Customer> customers = repository.findAll(pageable);
 
-        return ObjectMapper.parseList(customers, CustomerDTO.class);
+        Page<CustomerDTO> result = customers.map((customer) -> {
+            CustomerDTO dto = ObjectMapper.parseObject(customer, CustomerDTO.class);
+            Hateoas(dto);
+            return dto;
+        });
+
+        return result;
     }
 
     public void delete(Long id) {
@@ -172,6 +203,21 @@ public class CustomerService {
         } else if (customerCreateDTO.getDateBirth().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
         }
+    }
+
+    private void Hateoas(CustomerDTO customerDTO) {
+        customerDTO.add(linkTo(methodOn(CustomerController.class).create(ObjectMapper.parseObject(customerDTO, CustomerCreateDTO.class)))
+                .withRel("create").withType("POST"));
+        customerDTO.add(linkTo(methodOn(CustomerController.class).update(customerDTO.getId(),ObjectMapper.parseObject(customerDTO, CustomerCreateDTO.class)))
+                .withRel("update").withType("PUT"));
+        customerDTO.add(linkTo(methodOn(CustomerController.class).findById(customerDTO.getId()))
+                .withSelfRel().withType(" GET"));
+        customerDTO.add(linkTo(methodOn(CustomerController.class).findAll(0,12,"asc"))
+                .withRel("findAll").withType("GET"));
+        customerDTO.add(linkTo(methodOn(CustomerController.class).disable(customerDTO.getId()))
+                .withRel("disable").withType("PATCH"));
+        customerDTO.add(linkTo(methodOn(CustomerController.class).delete(customerDTO.getId()))
+                .withRel("delete").withType("DELETE"));
     }
 
 }

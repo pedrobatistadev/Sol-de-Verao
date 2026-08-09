@@ -1,4 +1,5 @@
 package com.projeto.sol_de_verao.services;
+import com.projeto.sol_de_verao.controllers.CategoryController;
 import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
@@ -12,6 +13,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class CategoryService {
@@ -29,7 +33,11 @@ public class CategoryService {
 
         Category category = ObjectMapper.parseObject(categoryCreateDTO, Category.class);
 
-        return ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
 
     }
 
@@ -42,14 +50,22 @@ public class CategoryService {
         Category category = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         category.setDescription(categoryCreateDTO.getDescription());
 
-        return ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public CategoryDTO findById(Long id) {
 
         logger.warn("Finding Category !");
 
-        return ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), CategoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), CategoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public List<CategoryDTO> findAll() {
@@ -58,7 +74,12 @@ public class CategoryService {
 
         List<Category> categories = repository.findAll();
 
-        return ObjectMapper.parseList(categories, CategoryDTO.class);
+
+        var result = ObjectMapper.parseList(categories, CategoryDTO.class);
+
+        result.forEach(this::Hateoas);
+
+        return result;
     }
 
     public void delete(Long id) {
@@ -78,5 +99,18 @@ public class CategoryService {
         if (categoryCreateDTO.getDescription() == null || categoryCreateDTO.getDescription() == "") {
             throw new IllegalArgumentException("The description field cannot be empty.");
         }
+    }
+
+    private void Hateoas(CategoryDTO categoryDTO) {
+        categoryDTO.add(linkTo(methodOn(CategoryController.class).create(ObjectMapper.parseObject(categoryDTO, CategoryCreateDTO.class)))
+                .withRel("create").withType("POST"));
+        categoryDTO.add(linkTo(methodOn(CategoryController.class).update(categoryDTO.getId(),ObjectMapper.parseObject(categoryDTO, CategoryCreateDTO.class)))
+                .withRel("update").withType("PUT"));
+        categoryDTO.add(linkTo(methodOn(CategoryController.class).findById(categoryDTO.getId()))
+                .withSelfRel().withType(" GET"));
+        categoryDTO.add(linkTo(methodOn(CategoryController.class).findAll())
+                .withRel("findAll").withType("GET"));
+        categoryDTO.add(linkTo(methodOn(CategoryController.class).delete(categoryDTO.getId()))
+                .withRel("delete").withType("DELETE"));
     }
 }

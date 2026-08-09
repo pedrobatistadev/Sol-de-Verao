@@ -1,6 +1,10 @@
 package com.projeto.sol_de_verao.services;
 
+import com.projeto.sol_de_verao.controllers.CategoryController;
+import com.projeto.sol_de_verao.controllers.InventoryController;
+import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.InventoryDTO;
+import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.InventoryCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Inventory;
@@ -13,6 +17,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class InventoryService {
@@ -30,7 +37,11 @@ public class InventoryService {
 
         Inventory inventory = ObjectMapper.parseObject(inventoryCreateDTO, Inventory.class);
 
-        return ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
 
     }
 
@@ -43,14 +54,22 @@ public class InventoryService {
         Inventory inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         inventory.setDescription(inventoryCreateDTO.getDescription());
 
-        return ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public InventoryDTO findById(Long id) {
 
         logger.warn("Finding Inventory !");
 
-        return ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), InventoryDTO.class);
+        var result = ObjectMapper.parseObject(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found")), InventoryDTO.class);
+
+        Hateoas(result);
+
+        return result;
     }
 
     public List<InventoryDTO> findAll() {
@@ -59,7 +78,12 @@ public class InventoryService {
 
         List<Inventory> categories = repository.findAll();
 
-        return ObjectMapper.parseList(categories, InventoryDTO.class);
+        var result = ObjectMapper.parseList(categories, InventoryDTO.class);
+
+        result.forEach(this::Hateoas);
+
+        return result;
+
     }
 
     public void delete(Long id) {
@@ -79,6 +103,19 @@ public class InventoryService {
         if (inventoryCreateDTO.getDescription() == null || inventoryCreateDTO.getDescription() == "") {
             throw new IllegalArgumentException("The description field cannot be empty.");
         }
+    }
+
+    private void Hateoas(InventoryDTO inventoryDTO) {
+        inventoryDTO.add(linkTo(methodOn(InventoryController.class).create(ObjectMapper.parseObject(inventoryDTO, InventoryCreateDTO.class)))
+                .withRel("create").withType("POST"));
+        inventoryDTO.add(linkTo(methodOn(InventoryController.class).update(inventoryDTO.getId(),ObjectMapper.parseObject(inventoryDTO, InventoryCreateDTO.class)))
+                .withRel("update").withType("PUT"));
+        inventoryDTO.add(linkTo(methodOn(InventoryController.class).findById(inventoryDTO.getId()))
+                .withSelfRel().withType(" GET"));
+        inventoryDTO.add(linkTo(methodOn(InventoryController.class).findAll())
+                .withRel("findAll").withType("GET"));
+        inventoryDTO.add(linkTo(methodOn(InventoryController.class).delete(inventoryDTO.getId()))
+                .withRel("delete").withType("DELETE"));
     }
 
 }
