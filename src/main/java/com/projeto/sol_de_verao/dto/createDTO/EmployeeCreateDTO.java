@@ -1,5 +1,7 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,23 +13,17 @@ public class EmployeeCreateDTO {
 
     private String phone;
 
-    private Boolean enabled;
-
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dateBirth;
 
-    private Date creationDate;
-
     public EmployeeCreateDTO() {
-        this.enabled = true;
     }
 
-    public EmployeeCreateDTO(String name, String cpf, String phone, Date dateBirth, Date creationDate) {
+    public EmployeeCreateDTO(String name, String cpf, String phone, Date dateBirth) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
-        this.enabled = true;
         this.dateBirth = dateBirth;
-        this.creationDate = creationDate;
     }
 
     public String getName() {
@@ -54,14 +50,6 @@ public class EmployeeCreateDTO {
         this.phone = phone;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public Date getDateBirth() {
         return dateBirth;
     }
@@ -70,22 +58,14 @@ public class EmployeeCreateDTO {
         this.dateBirth = dateBirth;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof EmployeeCreateDTO that)) return false;
-        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && Objects.equals(enabled, that.enabled) && Objects.equals(dateBirth, that.dateBirth) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && Objects.equals(dateBirth, that.dateBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cpf, phone, enabled, dateBirth, creationDate);
+        return Objects.hash(name, cpf, phone, dateBirth);
     }
 }

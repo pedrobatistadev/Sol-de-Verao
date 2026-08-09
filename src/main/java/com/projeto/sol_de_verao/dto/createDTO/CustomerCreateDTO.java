@@ -22,6 +22,9 @@ public class CustomerCreateDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateBirth;
 
+    public CustomerCreateDTO() {
+    }
+
     public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, LocalDate dateBirth) {
         this.name = name;
         this.cpf = cpf;

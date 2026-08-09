@@ -1,39 +1,30 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
-import com.projeto.sol_de_verao.model.Category;
 import jakarta.persistence.*;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class ProductCreateDTO {
 
     private String name;
 
-    private Long category;
+    private String category;
 
     private Double unitPrice;
 
     private Integer quantity;
 
-    private Integer inventory;
+    private String inventory;
 
-    private Boolean enabled;
-
-    private Date creationDate;
-
-    public ProductCreateDTO() {
-        this.enabled =  true;
+    public ProductCreateDTO () {
     }
 
-    public ProductCreateDTO(String name, Long category, Double unitPrice, Integer quantity, Integer inventory, Boolean enabled, Date creationDate) {
+    public ProductCreateDTO(String name, String category, Double unitPrice, Integer quantity, String inventory) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.inventory = inventory;
-        this.enabled = true;
-        this.creationDate = creationDate;
     }
 
     public String getName() {
@@ -44,11 +35,11 @@ public class ProductCreateDTO {
         this.name = name;
     }
 
-    public Long getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Long category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -68,38 +59,22 @@ public class ProductCreateDTO {
         this.quantity = quantity;
     }
 
-    public Integer getInventory() {
+    public String getInventory() {
         return inventory;
     }
 
-    public void setInventory(Integer inventory) {
+    public void setInventory(String inventory) {
         this.inventory = inventory;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof ProductCreateDTO that)) return false;
-        return Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(quantity, that.quantity) && Objects.equals(inventory, that.inventory) && Objects.equals(enabled, that.enabled) && Objects.equals(creationDate, that.creationDate);
+        return Objects.equals(name, that.name) && Objects.equals(category, that.category) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(quantity, that.quantity) && Objects.equals(inventory, that.inventory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, category, unitPrice, quantity, inventory, enabled, creationDate);
+        return Objects.hash(name, category, unitPrice, quantity, inventory);
     }
 }
