@@ -5,11 +5,13 @@ import com.projeto.sol_de_verao.model.Category;
 import com.projeto.sol_de_verao.model.Inventory;
 import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Relation(collectionRelation = "product")
 public class ProductDTO extends RepresentationModel<ProductDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;

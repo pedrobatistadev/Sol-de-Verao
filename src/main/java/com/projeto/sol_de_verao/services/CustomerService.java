@@ -1,37 +1,30 @@
 package com.projeto.sol_de_verao.services;
 
-import com.projeto.sol_de_verao.controllers.CategoryController;
 import com.projeto.sol_de_verao.controllers.CustomerController;
-import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.CustomerDTO;
-import com.projeto.sol_de_verao.dto.CustomerDTO;
-import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
-import com.projeto.sol_de_verao.dto.createDTO.CustomerCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CustomerCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
-import com.projeto.sol_de_verao.model.Customer;
 import com.projeto.sol_de_verao.model.Customer;
 import com.projeto.sol_de_verao.model.Customers_Log;
 import com.projeto.sol_de_verao.model.enums.Actions;
 import com.projeto.sol_de_verao.repository.CustomerLogRepository;
 import com.projeto.sol_de_verao.repository.CustomerRepository;
-import com.projeto.sol_de_verao.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -50,6 +43,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerLogRepository repositoryLog;
+
+    @Autowired
+    public PagedResourcesAssembler assembler;
 
     public CustomerDTO create(CustomerCreateDTO customerCreateDTO) {
 
@@ -151,7 +147,7 @@ public class CustomerService {
         return result;
     }
 
-    public Page<CustomerDTO> findAll(Pageable pageable) {
+    public PagedModel<EntityModel<CustomerDTO>> findAll(Pageable pageable) {
 
         logger.warn("Finding All Customers");
 
@@ -163,7 +159,7 @@ public class CustomerService {
             return dto;
         });
 
-        return result;
+        return assembler.toModel(result);
     }
 
     public void delete(Long id) {

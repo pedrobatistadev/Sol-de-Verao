@@ -2,11 +2,13 @@ package com.projeto.sol_de_verao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Relation(collectionRelation = "employee")
 public class EmployeeDTO extends RepresentationModel<EmployeeDTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;

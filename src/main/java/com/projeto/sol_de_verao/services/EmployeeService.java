@@ -1,9 +1,6 @@
 package com.projeto.sol_de_verao.services;
-import com.projeto.sol_de_verao.controllers.CategoryController;
 import com.projeto.sol_de_verao.controllers.EmployeeController;
-import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.EmployeeDTO;
-import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.EmployeeCreateDTO;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Employee;
@@ -14,10 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -29,6 +30,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository repository;
+
+    @Autowired
+    public PagedResourcesAssembler assembler;
 
     public EmployeeDTO create(EmployeeCreateDTO employeeCreateDTO) {
 
@@ -96,17 +100,20 @@ public class EmployeeService {
         return result;
     }
 
-    public List<EmployeeDTO> findAll() {
+    public PagedModel<EntityModel<EmployeeDTO>> findAll(Pageable pageable) {
 
         logger.warn("Finding All Employees");
 
-        List<Employee> categories = repository.findAll();
+        Page<Employee> employee = repository.findAll(pageable);
 
-        var result = ObjectMapper.parseList(categories, EmployeeDTO.class);
+        var result = employee.map((employe) -> {
+            var dto = ObjectMapper.parseObject(employe, EmployeeDTO.class);
 
-        result.forEach(this::Hateoas);
+            Hateoas(dto);
+            return dto;
+        });
 
-        return result;
+        return assembler.toModel(result);
     }
 
     public void delete(Long id) {
@@ -145,9 +152,11 @@ public class EmployeeService {
                 .withRel("create").withType("POST"));
         employeeDTO.add(linkTo(methodOn(EmployeeController.class).update(employeeDTO.getId(),ObjectMapper.parseObject(employeeDTO, EmployeeCreateDTO.class)))
                 .withRel("update").withType("PUT"));
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class))
+                .withRel("disable").withType("PATCH"));
         employeeDTO.add(linkTo(methodOn(EmployeeController.class).findById(employeeDTO.getId()))
                 .withSelfRel().withType(" GET"));
-        employeeDTO.add(linkTo(methodOn(EmployeeController.class).findAll())
+        employeeDTO.add(linkTo(methodOn(EmployeeController.class).findAll(0,12,"asc"))
                 .withRel("findAll").withType("GET"));
         employeeDTO.add(linkTo(methodOn(EmployeeController.class).delete(employeeDTO.getId()))
                 .withRel("delete").withType("DELETE"));

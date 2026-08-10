@@ -14,12 +14,19 @@ import com.projeto.sol_de_verao.repository.CategoryRepository;
 import com.projeto.sol_de_verao.repository.InventoryRepository;
 import com.projeto.sol_de_verao.repository.ProductLogRepository;
 import com.projeto.sol_de_verao.repository.ProductRepository;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -46,6 +53,10 @@ public class ProductService {
 
     @Autowired
     private ProductLogRepository repositoryLog;
+
+    @Autowired
+    public PagedResourcesAssembler assembler;
+
 
     public ProductDTO create(ProductCreateDTO productCreateDTO) {
 
@@ -156,17 +167,19 @@ public class ProductService {
         return result;
     }
 
-    public List<ProductDTO> findAll() {
+    public PagedModel<EntityModel<ProductDTO>> findAll(Pageable pageable) {
 
         logger.warn("Finding All Products");
 
-        List<Product> categories = repository.findAll();
+        Page<Product> products = repository.findAll(pageable);
 
-        var result = ObjectMapper.parseList(categories, ProductDTO.class);
+        Page<ProductDTO> result = products.map((product) -> {
+            var dto = ObjectMapper.parseObject(product, ProductDTO.class);
+            Hateoas(dto);
+            return dto;
+        });
 
-        result.forEach(this::Hateoas);
-
-        return result;
+        return assembler.toModel(result);
     }
 
     public void delete(Long id) {
@@ -218,7 +231,7 @@ public class ProductService {
                 .withRel("disable").withType("PATCH"));
         productDTO.add(linkTo(methodOn(ProductController.class).findById(productDTO.getId()))
                 .withSelfRel().withType(" GET"));
-        productDTO.add(linkTo(methodOn(ProductController.class).findAll())
+        productDTO.add(linkTo(methodOn(ProductController.class).findAll(0,12,"asc"))
                 .withRel("findAll").withType("GET"));
         productDTO.add(linkTo(methodOn(ProductController.class).delete(productDTO.getId()))
                 .withRel("delete").withType("DELETE"));

@@ -8,6 +8,11 @@ import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
 import com.projeto.sol_de_verao.services.ProductService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +54,11 @@ public class ProductController implements ProductControllerDocs {
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<ProductDTO>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
+    public ResponseEntity<PagedModel<EntityModel<ProductDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                       @RequestParam(value = "size", defaultValue = "12") Integer size,
+                                                                       @RequestParam(value = "direction", defaultValue = "asc") String direction) {
+        Pageable pageable = PageRequest.of(page,size, Sort.by(direction.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, "id"));
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
     }
 
     @DeleteMapping(value = "/{id}")
