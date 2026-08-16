@@ -30,6 +30,9 @@ public class Purchase implements Serializable {
     @Column(name = "payment_method")
     private PaymentMethod payment_method;
 
+    @Column(name = "number_of_installment")
+    private Integer numberOfInstallment;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
