@@ -30,6 +30,9 @@ public class Sale implements Serializable {
     @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
+    @Column(name = "number_of_installment")
+    private Integer numberOfInstallment;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
@@ -37,10 +40,11 @@ public class Sale implements Serializable {
     public Sale() {
     }
 
-    public Sale(Customer customer, Employee employee, PaymentMethod paymentMethod, Date creationDate) {
+    public Sale(Customer customer, Employee employee, PaymentMethod paymentMethod, Integer numberOfInstallment, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
         this.paymentMethod = paymentMethod;
+        this.numberOfInstallment = numberOfInstallment;
         this.creationDate = creationDate;
     }
 
@@ -76,6 +80,14 @@ public class Sale implements Serializable {
         this.paymentMethod = paymentMethod;
     }
 
+    public Integer getNumberOfInstallment() {
+        return numberOfInstallment;
+    }
+
+    public void setNumberOfInstallment(Integer numberOfInstallment) {
+        this.numberOfInstallment = numberOfInstallment;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -87,11 +99,11 @@ public class Sale implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Sale sale)) return false;
-        return Objects.equals(id, sale.id) && Objects.equals(customer, sale.customer) && Objects.equals(employee, sale.employee) && paymentMethod == sale.paymentMethod && Objects.equals(creationDate, sale.creationDate);
+        return Objects.equals(id, sale.id) && Objects.equals(customer, sale.customer) && Objects.equals(employee, sale.employee) && paymentMethod == sale.paymentMethod && Objects.equals(numberOfInstallment, sale.numberOfInstallment) && Objects.equals(creationDate, sale.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, employee, paymentMethod, creationDate);
+        return Objects.hash(id, customer, employee, paymentMethod, numberOfInstallment, creationDate);
     }
 }

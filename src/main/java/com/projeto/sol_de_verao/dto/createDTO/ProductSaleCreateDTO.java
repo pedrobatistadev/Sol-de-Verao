@@ -1,5 +1,6 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
+import com.projeto.sol_de_verao.dto.PaymentDTO;
 import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 
@@ -14,12 +15,12 @@ public class ProductSaleCreateDTO {
 
     private List<ProductQuantityDTO> productQuantity;
 
-    private String paymentMethod;
+    private PaymentDTO paymentMethod;
 
     public ProductSaleCreateDTO() {
     }
 
-    public ProductSaleCreateDTO(Long customer, Long employee, List<ProductQuantityDTO> productQuantity, String paymentMethod) {
+    public ProductSaleCreateDTO(Long customer, Long employee, List<ProductQuantityDTO> productQuantity, PaymentDTO paymentMethod) {
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
@@ -50,11 +51,11 @@ public class ProductSaleCreateDTO {
         this.productQuantity = productQuantity;
     }
 
-    public String getPaymentMethod() {
+    public PaymentDTO getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(PaymentDTO paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

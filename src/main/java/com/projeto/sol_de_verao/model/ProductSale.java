@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product_sale", uniqueConstraints = {@UniqueConstraint(columnNames = {"sale_id", "product_id"})})
+@Table(name = "products_sales", uniqueConstraints = {@UniqueConstraint(columnNames = {"sale_id", "product_id"})})
 public class ProductSale implements Serializable {
 
     private static final long serialVersionUID = 1L;

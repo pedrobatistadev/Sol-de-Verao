@@ -1,27 +1,27 @@
 package com.projeto.sol_de_verao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.projeto.sol_de_verao.model.enums.PaymentMethod;
-import org.springframework.hateoas.RepresentationModel;
+import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
+import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implements Serializable {
+public class ProductSaleDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private CustomerDTO customer;
+    private CustomerDTORes customer;
 
-    private EmployeeDTO employee;
+    private EmployeeDTORes employee;
+
+    private PaymentDTO paymentMethod;
 
     private List<ProductQuantityDTO> productQuantity;
-
-    private PaymentMethod paymentMethod;
 
     private Double totalValue;
 
@@ -31,7 +31,8 @@ public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implemen
     public ProductSaleDTO() {
     }
 
-    public ProductSaleDTO(CustomerDTO customer, EmployeeDTO employee, List<ProductQuantityDTO> productQuantity,PaymentMethod paymentMethod, Double totalValue, Date creationDate) {
+    public ProductSaleDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantityDTO> productQuantity, Double totalValue, Date creationDate) {
+        this.id = id;
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
@@ -48,19 +49,19 @@ public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implemen
         this.id = id;
     }
 
-    public CustomerDTO getCustomer() {
+    public CustomerDTORes getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDTO customer) {
+    public void setCustomer(CustomerDTORes customer) {
         this.customer = customer;
     }
 
-    public EmployeeDTO getEmployee() {
+    public EmployeeDTORes getEmployee() {
         return employee;
     }
 
-    public void setEmployee(EmployeeDTO employee) {
+    public void setEmployee(EmployeeDTORes employee) {
         this.employee = employee;
     }
 
@@ -72,11 +73,11 @@ public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implemen
         this.productQuantity = productQuantity;
     }
 
-    public PaymentMethod getPaymentMethod() {
+    public PaymentDTO getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
+    public void setPaymentMethod(PaymentDTO paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

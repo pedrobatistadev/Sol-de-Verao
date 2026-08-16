@@ -88,6 +88,7 @@ CREATE TABLE Sales (
                        customer_id BIGINT NOT NULL,
                        employee_id BIGINT NOT NULL,
                        payment_method VARCHAR(20) NOT NULL,
+                       number_of_installment INT NOT NULL,
                        creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                        CONSTRAINT fk_sales_customer
@@ -104,6 +105,7 @@ CREATE TABLE Purchases (
                            customer_id BIGINT NOT NULL,
                            employee_id BIGINT NOT NULL,
                            payment_method VARCHAR(20) NOT NULL,
+                           number_of_installment INT NOT NULL,
                            creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                            CONSTRAINT fk_purchases_customer

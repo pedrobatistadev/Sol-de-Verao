@@ -48,6 +48,14 @@ public class AccountsReceivable implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public AccountsReceivable(Sale sale, Integer installmentNumber, Double totalValue, LocalDate dueDate, Date creationDate) {
+        this.sale = sale;
+        this.installmentNumber = installmentNumber;
+        this.totalValue = totalValue;
+        this.dueDate = dueDate;
+        this.creationDate = creationDate;
+    }
+
     public Long getId() {
         return id;
     }
