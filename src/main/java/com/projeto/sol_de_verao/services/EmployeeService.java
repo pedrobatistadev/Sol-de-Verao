@@ -32,7 +32,7 @@ public class EmployeeService {
     private EmployeeRepository repository;
 
     @Autowired
-    public PagedResourcesAssembler assembler;
+    private PagedResourcesAssembler assembler;
 
     public EmployeeDTO create(EmployeeCreateDTO employeeCreateDTO) {
 

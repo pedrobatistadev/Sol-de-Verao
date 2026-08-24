@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -32,9 +33,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Service
 public class CustomerService {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private Logger logger = LoggerFactory.getLogger(CustomerService.class.getName());
 
@@ -45,7 +44,7 @@ public class CustomerService {
     private CustomerLogRepository repositoryLog;
 
     @Autowired
-    public PagedResourcesAssembler assembler;
+    private PagedResourcesAssembler assembler;
 
     public CustomerDTO create(CustomerCreateDTO customerCreateDTO) {
 
@@ -108,7 +107,7 @@ public class CustomerService {
         }
 
         if (!oldCustomer.getDateBirth().equals(newCustomer.getDateBirth())) {
-            repositoryLog.save(new Customers_Log(customer,Actions.UPDATE, "Date Birth changed from " + sdf1.format(oldCustomer.getDateBirth()) + " to " + sdf1.format(newCustomer.getDateBirth()), new Date()));
+            repositoryLog.save(new Customers_Log(customer,Actions.UPDATE, "Date Birth changed from " + dtf.format(oldCustomer.getDateBirth()) + " to " + dtf.format(newCustomer.getDateBirth()), new Date()));
         }
 
         var result = ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
