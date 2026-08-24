@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping(value = "/v1/category")
 public class CategoryController implements CategoryControllerDocs {
@@ -23,8 +22,8 @@ public class CategoryController implements CategoryControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<CategoryDTO> create(@RequestBody CategoryCreateDTO category) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(category));
+    public ResponseEntity<CategoryDTO> create(@RequestBody CategoryCreateDTO categoryCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(categoryCreateDTO));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -49,5 +48,4 @@ public class CategoryController implements CategoryControllerDocs {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

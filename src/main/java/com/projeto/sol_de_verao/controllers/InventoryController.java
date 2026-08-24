@@ -22,8 +22,8 @@ public class InventoryController implements InventoryControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<InventoryDTO> create(@RequestBody InventoryCreateDTO category) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(category));
+    public ResponseEntity<InventoryDTO> create(@RequestBody InventoryCreateDTO inventoryCreateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(inventoryCreateDTO));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -34,8 +34,8 @@ public class InventoryController implements InventoryControllerDocs {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<InventoryDTO> update(@PathVariable Long id, @RequestBody InventoryCreateDTO InventoryCreateDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, InventoryCreateDTO));
+    public ResponseEntity<InventoryDTO> update(@PathVariable Long id, @RequestBody InventoryCreateDTO inventoryCreateDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, inventoryCreateDTO));
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
