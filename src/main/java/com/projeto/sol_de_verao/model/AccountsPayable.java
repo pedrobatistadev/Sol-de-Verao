@@ -49,6 +49,14 @@ public class AccountsPayable implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public AccountsPayable(Purchase purchase, Integer installmentNumber, Double totalValue, LocalDate dueDate, Date creationDate) {
+        this.purchase = purchase;
+        this.installmentNumber = installmentNumber;
+        this.totalValue = totalValue;
+        this.dueDate = dueDate;
+        this.creationDate = creationDate;
+    }
+
     public Long getId() {
         return id;
     }

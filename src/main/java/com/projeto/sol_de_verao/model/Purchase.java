@@ -28,7 +28,7 @@ public class Purchase implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method")
-    private PaymentMethod payment_method;
+    private PaymentMethod paymentMethod;
 
     @Column(name = "number_of_installment")
     private Integer numberOfInstallment;
@@ -40,10 +40,11 @@ public class Purchase implements Serializable {
     public Purchase() {
     }
 
-    public Purchase(Customer customer, Employee employee,PaymentMethod paymentMethod, Date creationDate) {
+    public Purchase(Customer customer, Employee employee, PaymentMethod paymentMethod, Integer numberOfInstallment, Date creationDate) {
         this.customer = customer;
         this.employee = employee;
-        this.payment_method = paymentMethod;
+        this.paymentMethod = paymentMethod;
+        this.numberOfInstallment = numberOfInstallment;
         this.creationDate = creationDate;
     }
 
@@ -71,12 +72,20 @@ public class Purchase implements Serializable {
         this.employee = employee;
     }
 
-    public PaymentMethod getPayment_method() {
-        return payment_method;
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPayment_method(PaymentMethod payment_method) {
-        this.payment_method = payment_method;
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getNumberOfInstallment() {
+        return numberOfInstallment;
+    }
+
+    public void setNumberOfInstallment(Integer numberOfInstallment) {
+        this.numberOfInstallment = numberOfInstallment;
     }
 
     public Date getCreationDate() {
@@ -90,11 +99,11 @@ public class Purchase implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Purchase purchase)) return false;
-        return Objects.equals(id, purchase.id) && Objects.equals(customer, purchase.customer) && Objects.equals(employee, purchase.employee) && payment_method == purchase.payment_method && Objects.equals(creationDate, purchase.creationDate);
+        return Objects.equals(id, purchase.id) && Objects.equals(customer, purchase.customer) && Objects.equals(employee, purchase.employee) && paymentMethod == purchase.paymentMethod && Objects.equals(numberOfInstallment, purchase.numberOfInstallment) && Objects.equals(creationDate, purchase.creationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, employee, payment_method, creationDate);
+        return Objects.hash(id, customer, employee, paymentMethod, numberOfInstallment, creationDate);
     }
 }
