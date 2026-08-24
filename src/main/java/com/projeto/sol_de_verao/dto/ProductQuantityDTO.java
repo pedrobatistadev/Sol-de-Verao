@@ -5,7 +5,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ProductQuantityDTO extends RepresentationModel<ProductQuantityDTO> implements Serializable {
+public class ProductQuantityDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -3,13 +3,14 @@ package com.projeto.sol_de_verao.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ProductSaleDTO implements Serializable {
+public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implements Serializable  {
 
     private static final long serialVersionUID = 1L;
 
