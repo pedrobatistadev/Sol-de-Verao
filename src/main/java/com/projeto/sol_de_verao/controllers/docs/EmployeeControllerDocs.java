@@ -19,7 +19,7 @@ public interface EmployeeControllerDocs {
 
     @Operation(summary = "Create Employee", description = "Create Employee", tags = {"Employee"}, responses = {
             @ApiResponse(description = "Success", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = EmployeeDTO.class))))})
-    ResponseEntity<EmployeeDTO> create(@RequestBody EmployeeCreateDTO Employee);
+    ResponseEntity<EmployeeDTO> create(@RequestBody EmployeeCreateDTO employee);
 
     @Operation(summary = "Find Employee", description = "Find Employee", tags = {"Employee"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = EmployeeDTO.class))))})
@@ -36,10 +36,10 @@ public interface EmployeeControllerDocs {
     ResponseEntity<?> delete(@PathVariable Long id);
 
     @Operation(summary = "Updating Employee", description = "Updating Employee", tags = {"Employee"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
-    ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO EmployeeCreateDTO);
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = EmployeeDTO.class))))})
+    ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO employeeCreateDTO);
 
     @Operation(summary = "Disabling Employee", description = "Disabling Employee", tags = {"Employee"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = EmployeeDTO.class))))})
     ResponseEntity<EmployeeDTO> disable(@PathVariable Long id);
 }

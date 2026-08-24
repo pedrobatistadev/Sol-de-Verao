@@ -40,10 +40,10 @@ public interface ProductControllerDocs {
     ResponseEntity<?> delete(@PathVariable Long id);
 
     @Operation(summary = "Updating Product", description = "Updating Product", tags = {"Product"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class))))})
     ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductCreateDTO productCreateDTO);
 
     @Operation(summary = "Disabling Product", description = "Disabling Product", tags = {"Product"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class))))})
     ResponseEntity<ProductDTO> disable(@PathVariable Long id);
 }

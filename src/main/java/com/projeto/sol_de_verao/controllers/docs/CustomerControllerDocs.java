@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 public interface CustomerControllerDocs {
     
     @Operation(summary = "Create Customer", description = "Create Customer", tags = {"Customer"}, responses = {
             @ApiResponse(description = "Success", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
-    ResponseEntity<CustomerDTO> create(@RequestBody CustomerCreateDTO Customer);
+    ResponseEntity<CustomerDTO> create(@RequestBody CustomerCreateDTO customer);
 
     @Operation(summary = "Find Customer", description = "Find Customer", tags = {"Customer"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
@@ -39,8 +36,8 @@ public interface CustomerControllerDocs {
     ResponseEntity<?> delete(@PathVariable Long id);
 
     @Operation(summary = "Updating Customer", description = "Updating Customer", tags = {"Customer"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
-    ResponseEntity<CustomerDTO> update(@PathVariable Long id, @RequestBody CustomerCreateDTO CustomerCreateDTO);
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
+    ResponseEntity<CustomerDTO> update(@PathVariable Long id, @RequestBody CustomerCreateDTO customerCreateDTO);
 
     @Operation(summary = "Disable Customer", description = "Disabling Customer", tags = {"Customer"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})

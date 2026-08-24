@@ -20,7 +20,7 @@ public interface InventoryControllerDocs {
 
     @Operation(summary = "Create Inventory", description = "Create Inventory", tags = {"Inventory"}, responses = {
             @ApiResponse(description = "Success", responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = InventoryDTO.class))))})
-    ResponseEntity<InventoryDTO> create(@RequestBody InventoryCreateDTO Inventory);
+    ResponseEntity<InventoryDTO> create(@RequestBody InventoryCreateDTO inventory);
 
     @Operation(summary = "Find Inventory", description = "Find Inventory", tags = {"Inventory"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = InventoryDTO.class))))})
@@ -35,6 +35,6 @@ public interface InventoryControllerDocs {
     ResponseEntity<?> delete(@PathVariable Long id);
 
     @Operation(summary = "Updating Inventory", description = "Updating Inventory", tags = {"Inventory"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
-    ResponseEntity<InventoryDTO> update(@PathVariable Long id, @RequestBody InventoryCreateDTO InventoryCreateDTO);
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = InventoryDTO.class))))})
+    ResponseEntity<InventoryDTO> update(@PathVariable Long id, @RequestBody InventoryCreateDTO inventoryCreateDTO);
 }

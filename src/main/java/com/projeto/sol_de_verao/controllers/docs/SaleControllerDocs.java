@@ -35,7 +35,4 @@ public interface SaleControllerDocs {
             @ApiResponse(description = "Success", responseCode = "204")})
     ResponseEntity<?> delete(@PathVariable Long id);
 
-    @Operation(summary = "Updating Sale", description = "Updating Sale", tags = {"Sale"}, responses = {
-            @ApiResponse(description = "Success", responseCode = "200")})
-    ResponseEntity<ProductSaleDTO> update(@PathVariable Long id, @RequestBody ProductSaleCreateDTO sale);
 }
