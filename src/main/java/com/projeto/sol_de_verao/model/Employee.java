@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,7 +32,7 @@ public class Employee implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date_birth", nullable = false)
-    private Date dateBirth;
+    private LocalDate dateBirth;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "creation_date", nullable = false)
@@ -41,7 +42,7 @@ public class Employee implements Serializable {
         this.enabled = true;
     }
 
-    public Employee(String name, String cpf, String phone, Date dateBirth, Date creationDate) {
+    public Employee(String name, String cpf, String phone, LocalDate dateBirth, Date creationDate) {
         this.name = name;
         this.cpf = cpf;
         this.phone = phone;
@@ -90,11 +91,11 @@ public class Employee implements Serializable {
         this.enabled = enabled;
     }
 
-    public Date getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(Date dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
 
