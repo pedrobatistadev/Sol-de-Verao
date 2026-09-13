@@ -2,6 +2,7 @@ package com.projeto.sol_de_verao.services;
 import com.projeto.sol_de_verao.controllers.CategoryController;
 import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Category;
 import com.projeto.sol_de_verao.repository.CategoryRepository;
@@ -29,8 +30,6 @@ public class CategoryService {
 
         logger.warn("Creating Category !");
 
-        validation(categoryCreateDTO);
-
         Category category = ObjectMapper.parseObject(categoryCreateDTO, Category.class);
 
         var result = ObjectMapper.parseObject(repository.save(category), CategoryDTO.class);
@@ -44,8 +43,6 @@ public class CategoryService {
     public CategoryDTO update(Long id, CategoryCreateDTO categoryCreateDTO) {
 
         logger.warn("Updating Category !");
-
-        validation(categoryCreateDTO);
 
         Category category = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         category.setDescription(categoryCreateDTO.getDescription());
@@ -91,13 +88,7 @@ public class CategoryService {
         try {
             repository.delete(category);
         } catch(Exception e) {
-            throw new DataIntegrityViolationException("This action is not possible because this category is currently in use.");
-        }
-    }
-
-    private void validation(CategoryCreateDTO categoryCreateDTO) {
-        if (categoryCreateDTO.getDescription() == null || categoryCreateDTO.getDescription() == "") {
-            throw new IllegalArgumentException("The description field cannot be empty.");
+            throw new DatabaseIntegrationException("This action is not possible because this category is currently in use.");
         }
     }
 

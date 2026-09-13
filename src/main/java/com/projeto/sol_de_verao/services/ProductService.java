@@ -7,6 +7,7 @@ import com.projeto.sol_de_verao.dto.InventoryDTO;
 import com.projeto.sol_de_verao.dto.ProductDTO;
 import com.projeto.sol_de_verao.dto.createDTO.InventoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.*;
 import com.projeto.sol_de_verao.model.enums.Actions;
@@ -62,8 +63,6 @@ public class ProductService {
 
         logger.warn("Creating Product !");
 
-        validation(productCreateDTO);
-
         Category category = repositoryCategory.findByName(productCreateDTO.getCategory()).orElseThrow(() -> new EntityNotFoundException("Category Not Found"));
         Inventory inventory = repositoryInventory.findByName(productCreateDTO.getInventory()).orElseThrow(() -> new EntityNotFoundException("Inventory Not Found"));
 
@@ -88,8 +87,6 @@ public class ProductService {
     public ProductDTO update(Long id, ProductCreateDTO productCreateDTO) {
 
         logger.warn("Updating Product !");
-
-        validation(productCreateDTO);
 
         Product product = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
 
@@ -191,35 +188,10 @@ public class ProductService {
         try {
             repository.delete(product);
         } catch(Exception e) {
-            throw new DataIntegrityViolationException("This action is not possible because this product is currently in use.");
+            throw new DatabaseIntegrationException("This action is not possible because this product is currently in use.");
         }
 
         repositoryLog.save(new Product_Log(product,Actions.DELETE, "Product " + product.getName() + " delected successful", new Date()));
-    }
-
-    private void validation(ProductCreateDTO productCreateDTO) {
-        if (productCreateDTO.getName() == null || productCreateDTO.getName() == "") {
-            throw new IllegalArgumentException("The name field cannot be empty.");
-
-        } else if (productCreateDTO.getCategory() == null || productCreateDTO.getCategory() == "") {
-            throw new IllegalArgumentException("The category field cannot be empty.");
-
-        } else if (productCreateDTO.getUnitPrice() == null || productCreateDTO.getUnitPrice() == 0.00) {
-            throw new IllegalArgumentException("The unit price field cannot be empty or 0.");
-
-        } else if (productCreateDTO.getUnitPrice() <= 0.00) {
-            throw new IllegalArgumentException("The unit price field cannot be less than 0.");
-
-        } else if (productCreateDTO.getQuantity() == null || productCreateDTO.getQuantity() == 0) {
-            throw new IllegalArgumentException("The quantity field cannot be empty or 0.");
-        }
-        else if (productCreateDTO.getQuantity() <= 0) {
-            throw new IllegalArgumentException("The quantity field cannot be less than 0.");
-
-        }else if (productCreateDTO.getInventory() == null || productCreateDTO.getInventory() == "") {
-            throw new IllegalArgumentException("The inventory field cannot be empty.");
-
-        }
     }
 
     private void Hateoas(ProductDTO productDTO) {

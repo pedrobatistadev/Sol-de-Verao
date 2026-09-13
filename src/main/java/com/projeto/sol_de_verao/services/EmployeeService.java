@@ -2,6 +2,7 @@ package com.projeto.sol_de_verao.services;
 import com.projeto.sol_de_verao.controllers.EmployeeController;
 import com.projeto.sol_de_verao.dto.EmployeeDTO;
 import com.projeto.sol_de_verao.dto.createDTO.EmployeeCreateDTO;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Employee;
 import com.projeto.sol_de_verao.repository.EmployeeRepository;
@@ -38,8 +39,6 @@ public class EmployeeService {
 
         logger.warn("Creating Employee !");
 
-        validation(employeeCreateDTO);
-
         Employee employee = ObjectMapper.parseObject(employeeCreateDTO, Employee.class);
         employee.setEnabled(true);
         employee.setCreationDate(new Date());
@@ -55,8 +54,6 @@ public class EmployeeService {
     public EmployeeDTO update(Long id, EmployeeCreateDTO employeeCreateDTO) {
 
         logger.warn("Updating Employee !");
-
-        validation(employeeCreateDTO);
 
         Employee employee = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         employee.setName(employeeCreateDTO.getName());
@@ -125,25 +122,7 @@ public class EmployeeService {
         try {
             repository.delete(employee);
         } catch(Exception e) {
-            throw new DataIntegrityViolationException("This action is not possible because this employee is currently in use.");
-        }
-    }
-
-    private void validation(EmployeeCreateDTO employeeCreateDTO) {
-        if (employeeCreateDTO.getName() == null || employeeCreateDTO.getName() == "") {
-            throw new IllegalArgumentException("The name field cannot be empty.");
-
-        } else if (employeeCreateDTO.getCpf() == null || employeeCreateDTO.getCpf() == "") {
-            throw new IllegalArgumentException("The cpf field cannot be empty.");
-
-        } else if (employeeCreateDTO.getPhone() == null || employeeCreateDTO.getPhone() == "") {
-            throw new IllegalArgumentException("The phone field cannot be empty.");
-
-        } else if (employeeCreateDTO.getDateBirth() == null) {
-            throw new IllegalArgumentException("The date birth field cannot be empty.");
-
-        } else if (employeeCreateDTO.getDateBirth().after(new Date())) {
-            throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
+            throw new DatabaseIntegrationException("This action is not possible because this employee is currently in use.");
         }
     }
 

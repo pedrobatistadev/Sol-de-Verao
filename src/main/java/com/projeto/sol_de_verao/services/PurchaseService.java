@@ -6,6 +6,7 @@ import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.*;
 import com.projeto.sol_de_verao.model.enums.TypeCustomer;
@@ -143,7 +144,7 @@ public class PurchaseService {
         try {
             repositoryPurchase.delete(purchase);
         } catch (EntityNotFoundException e) {
-            throw new DataIntegrityViolationException("This action is not possible because this purchase is currently in use.");
+            throw new DatabaseIntegrationException("This action is not possible because this purchase is currently in use.");
         }
     }
 

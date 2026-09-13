@@ -6,6 +6,7 @@ import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.InventoryDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.InventoryCreateDTO;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Inventory;
 import com.projeto.sol_de_verao.repository.InventoryRepository;
@@ -33,8 +34,6 @@ public class InventoryService {
 
         logger.warn("Creating Inventory");
 
-        validation(inventoryCreateDTO);
-
         Inventory inventory = ObjectMapper.parseObject(inventoryCreateDTO, Inventory.class);
 
         var result = ObjectMapper.parseObject(repository.save(inventory), InventoryDTO.class);
@@ -48,8 +47,6 @@ public class InventoryService {
     public InventoryDTO update(Long id, InventoryCreateDTO inventoryCreateDTO) {
 
         logger.warn("Updating Inventory !");
-
-        validation(inventoryCreateDTO);
 
         Inventory inventory = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
         inventory.setDescription(inventoryCreateDTO.getDescription());
@@ -95,13 +92,7 @@ public class InventoryService {
         try {
             repository.delete(inventory);
         } catch (Exception e) {
-            throw new DataIntegrityViolationException("This action is not possible because this inventory is currently in use.");
-        }
-    }
-    
-    private void validation(InventoryCreateDTO inventoryCreateDTO) {
-        if (inventoryCreateDTO.getDescription() == null || inventoryCreateDTO.getDescription() == "") {
-            throw new IllegalArgumentException("The description field cannot be empty.");
+            throw new DatabaseIntegrationException("This action is not possible because this inventory is currently in use.");
         }
     }
 

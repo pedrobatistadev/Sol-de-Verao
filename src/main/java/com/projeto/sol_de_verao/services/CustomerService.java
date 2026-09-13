@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.services;
 import com.projeto.sol_de_verao.controllers.CustomerController;
 import com.projeto.sol_de_verao.dto.CustomerDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CustomerCreateDTO;
+import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.Customer;
 import com.projeto.sol_de_verao.model.Customers_Log;
@@ -14,16 +15,12 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -50,8 +47,6 @@ public class CustomerService {
 
         logger.warn("Creating Customer !");
 
-        validation(customerCreateDTO);
-
         Customer customer = ObjectMapper.parseObject(customerCreateDTO, Customer.class);
         customer.setEnabled(true);
         customer.setCreationDate(new Date());
@@ -70,8 +65,6 @@ public class CustomerService {
     public CustomerDTO update(Long id, CustomerCreateDTO customerCreateDTO) {
 
         logger.warn("Updating Customer !");
-
-        validation(customerCreateDTO);
 
         Customer customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
 
@@ -170,34 +163,10 @@ public class CustomerService {
         try {
             repository.delete(customer);
         } catch(Exception e) {
-            throw new DataIntegrityViolationException("This action is not possible because this customer is currently in use.");
+            throw new DatabaseIntegrationException("This action is not possible because this customer is currently in use.");
         }
 
         repositoryLog.save(new Customers_Log(customer,Actions.DELETE, "Customer " + customer.getName() + " delected successful", new Date()));
-    }
-
-    private void validation(CustomerCreateDTO customerCreateDTO) {
-        if (customerCreateDTO.getName() == null || customerCreateDTO.getName() == "") {
-            throw new IllegalArgumentException("The name field cannot be empty.");
-
-        } else if (customerCreateDTO.getCpf() == null || customerCreateDTO.getCpf() == "") {
-            throw new IllegalArgumentException("The cpf field cannot be empty.");
-
-        } else if (customerCreateDTO.getPhone() == null || customerCreateDTO.getPhone() == "") {
-            throw new IllegalArgumentException("The phone field cannot be empty.");
-
-        } else if (customerCreateDTO.getCredit() == null) {
-            throw new IllegalArgumentException("The credit field cannot be empty.");
-
-        } else if (customerCreateDTO.getType() == null) {
-            throw new IllegalArgumentException("The type field cannot be empty.");
-
-        } else if (customerCreateDTO.getDateBirth() == null) {
-            throw new IllegalArgumentException("The date birth field cannot be empty.");
-
-        } else if (customerCreateDTO.getDateBirth().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("The date of birth field cannot be later than the current date.");
-        }
     }
 
     private void Hateoas(CustomerDTO customerDTO) {
