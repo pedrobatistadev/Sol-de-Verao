@@ -1,9 +1,12 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class CategoryCreateDTO {
 
+    @NotBlank(message = "The description field cannot be empty.")
     private String description;
 
     public CategoryCreateDTO() {

@@ -1,19 +1,29 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.Objects;
 
 public class ProductCreateDTO {
 
+    @NotBlank(message = "The name field cannot be empty.")
     private String name;
 
+    @NotBlank(message = "The category field cannot be empty.")
     private String category;
 
+    @NotNull(message = "The unit price field cannot be empty")
+    @Positive(message = "The value of unitPrice must be greater than zero.")
     private Double unitPrice;
 
+    @NotNull(message = "The quantity field cannot be empty or 0.")
+    @Positive(message = "The value of quantity must be greater than zero.")
     private Integer quantity;
 
+    @NotBlank(message = "The inventory field cannot be empty.")
     private String inventory;
 
     public ProductCreateDTO () {
