@@ -1,3 +1,22 @@
 spring:
   application:
     name: sol-de-verao
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: root
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+    show-sql: false
+    open-in-view: false
+logging:
+  level:
+    root: WARN
+spring-doc:
+  paths-to-match: /**
+  swagger-ui:
+    path: /swagger
