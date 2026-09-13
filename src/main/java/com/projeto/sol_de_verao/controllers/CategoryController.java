@@ -4,6 +4,7 @@ import com.projeto.sol_de_verao.controllers.docs.CategoryControllerDocs;
 import com.projeto.sol_de_verao.dto.CategoryDTO;
 import com.projeto.sol_de_verao.dto.createDTO.CategoryCreateDTO;
 import com.projeto.sol_de_verao.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public class CategoryController implements CategoryControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<CategoryDTO> create(@RequestBody CategoryCreateDTO categoryCreateDTO) {
+    public ResponseEntity<CategoryDTO> create(@Valid @RequestBody CategoryCreateDTO categoryCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(categoryCreateDTO));
     }
 
@@ -34,7 +35,7 @@ public class CategoryController implements CategoryControllerDocs {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryCreateDTO categoryCreateDTO) {
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryCreateDTO categoryCreateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, categoryCreateDTO));
     }
 

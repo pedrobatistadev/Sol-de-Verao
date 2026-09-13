@@ -4,6 +4,7 @@ import com.projeto.sol_de_verao.controllers.docs.EmployeeControllerDocs;
 import com.projeto.sol_de_verao.dto.EmployeeDTO;
 import com.projeto.sol_de_verao.dto.createDTO.EmployeeCreateDTO;
 import com.projeto.sol_de_verao.services.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class EmployeeController implements EmployeeControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<EmployeeDTO> create(@RequestBody EmployeeCreateDTO employee) {
+    public ResponseEntity<EmployeeDTO> create(@Valid @RequestBody EmployeeCreateDTO employee) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(employee));
     }
 
@@ -41,7 +42,7 @@ public class EmployeeController implements EmployeeControllerDocs {
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @RequestBody EmployeeCreateDTO employeeCreateDTO) {
+    public ResponseEntity<EmployeeDTO> update(@PathVariable Long id, @Valid @RequestBody EmployeeCreateDTO employeeCreateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, employeeCreateDTO));
     }
 

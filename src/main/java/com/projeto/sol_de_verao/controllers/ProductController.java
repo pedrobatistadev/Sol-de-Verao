@@ -6,6 +6,7 @@ import com.projeto.sol_de_verao.dto.ProductDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductCreateDTO;
 import com.projeto.sol_de_verao.services.ProductService;
+import jakarta.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +32,7 @@ public class ProductController implements ProductControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductCreateDTO productCreateDTO) {
+    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductCreateDTO productCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(productCreateDTO));
     }
 
@@ -43,7 +44,7 @@ public class ProductController implements ProductControllerDocs {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductCreateDTO productCreateDTO) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductCreateDTO productCreateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, productCreateDTO));
     }
 

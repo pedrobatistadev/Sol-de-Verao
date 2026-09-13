@@ -4,6 +4,7 @@ import com.projeto.sol_de_verao.controllers.docs.InventoryControllerDocs;
 import com.projeto.sol_de_verao.dto.InventoryDTO;
 import com.projeto.sol_de_verao.dto.createDTO.InventoryCreateDTO;
 import com.projeto.sol_de_verao.services.InventoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ public class InventoryController implements InventoryControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<InventoryDTO> create(@RequestBody InventoryCreateDTO inventoryCreateDTO) {
+    public ResponseEntity<InventoryDTO> create(@Valid @RequestBody InventoryCreateDTO inventoryCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(inventoryCreateDTO));
     }
 
@@ -34,7 +35,7 @@ public class InventoryController implements InventoryControllerDocs {
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<InventoryDTO> update(@PathVariable Long id, @RequestBody InventoryCreateDTO inventoryCreateDTO) {
+    public ResponseEntity<InventoryDTO> update(@PathVariable Long id, @Valid @RequestBody InventoryCreateDTO inventoryCreateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.update(id, inventoryCreateDTO));
     }
 
