@@ -1,13 +1,18 @@
 package com.projeto.sol_de_verao.dto;
 
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.Objects;
 
 public class PaymentDTO {
 
+    @NotNull(message = "The payment method cannot be empty.")
     private PaymentMethod paymentMethod;
 
+    @NotNull(message = "The number of installments cannot be empty.")
+    @Positive(message = "The number of installments cannot be 0 or negative.")
     private Integer numberOfInstallments;
 
     public PaymentDTO() {

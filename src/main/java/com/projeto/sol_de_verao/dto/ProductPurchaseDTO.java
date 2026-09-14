@@ -1,10 +1,8 @@
 package com.projeto.sol_de_verao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.projeto.sol_de_verao.dto.createDTO.EmployeeCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
-import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
@@ -24,17 +22,17 @@ public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> 
 
     private PaymentDTO paymentMethod;
 
-    private List<ProductQuantityDTO> productQuantity;
+    private List<ProductQuantityPurchaseDTO> productQuantity;
 
     private Double totalValue;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
 
     public ProductPurchaseDTO() {
     }
 
-    public ProductPurchaseDTO(Long id,CustomerDTORes customer, EmployeeDTORes employee,PaymentDTO paymentMethod, List<ProductQuantityDTO> productQuantity, Double totalValue, Date creationDate) {
+    public ProductPurchaseDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantityPurchaseDTO> productQuantity, Double totalValue, Date creationDate) {
         this.id = id;
         this.customer = customer;
         this.employee = employee;
@@ -68,11 +66,11 @@ public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> 
         this.employee = employee;
     }
 
-    public List<ProductQuantityDTO> getProductQuantity() {
+    public List<ProductQuantityPurchaseDTO> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(List<ProductQuantityDTO> productQuantity) {
+    public void setProductQuantity(List<ProductQuantityPurchaseDTO> productQuantity) {
         this.productQuantity = productQuantity;
     }
 

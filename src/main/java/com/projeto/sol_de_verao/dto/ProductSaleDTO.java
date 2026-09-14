@@ -22,17 +22,17 @@ public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implemen
 
     private PaymentDTO paymentMethod;
 
-    private List<ProductQuantityDTO> productQuantity;
+    private List<ProductQuantitySaleDTO> productQuantity;
 
     private Double totalValue;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
 
     public ProductSaleDTO() {
     }
 
-    public ProductSaleDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantityDTO> productQuantity, Double totalValue, Date creationDate) {
+    public ProductSaleDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantitySaleDTO> productQuantity, Double totalValue, Date creationDate) {
         this.id = id;
         this.customer = customer;
         this.employee = employee;
@@ -66,11 +66,11 @@ public class ProductSaleDTO extends RepresentationModel<ProductSaleDTO> implemen
         this.employee = employee;
     }
 
-    public List<ProductQuantityDTO> getProductQuantity() {
+    public List<ProductQuantitySaleDTO> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(List<ProductQuantityDTO> productQuantity) {
+    public void setProductQuantity(List<ProductQuantitySaleDTO> productQuantity) {
         this.productQuantity = productQuantity;
     }
 
