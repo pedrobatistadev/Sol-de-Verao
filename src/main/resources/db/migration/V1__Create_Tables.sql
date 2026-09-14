@@ -14,7 +14,7 @@ CREATE TABLE Customers (
                            name VARCHAR(45) NOT NULL,
                            cpf VARCHAR(45) NOT NULL,
                            phone VARCHAR(45),
-                           credit BIT(1) NOT NULL DEFAULT b'0',
+                           credit BIT(1) DEFAULT b'0',
                            type VARCHAR(20) NOT NULL,
                            enabled BIT(1) NOT NULL DEFAULT b'1',
                            date_birth DATE,
@@ -155,7 +155,7 @@ CREATE TABLE Accounts_Receivable (
                                      installment_number INT NOT NULL,
                                      payment DATE,
                                      total_value DECIMAL(10,2) NOT NULL,
-                                     due_date DATE NOT NULL,
+                                     due_date DATE,
                                      creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                                      CONSTRAINT fk_accounts_receivable_sale
@@ -169,7 +169,7 @@ CREATE TABLE Accounts_Payable (
                                   installment_number INT NOT NULL,
                                   payment DATE,
                                   total_value DECIMAL(10,2) NOT NULL,
-                                  due_date DATE NOT NULL,
+                                  due_date DATE,
                                   creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                                   CONSTRAINT fk_accounts_payable_purchase
