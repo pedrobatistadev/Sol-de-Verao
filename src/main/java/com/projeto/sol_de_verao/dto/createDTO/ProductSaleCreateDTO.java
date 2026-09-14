@@ -1,26 +1,37 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
 import com.projeto.sol_de_verao.dto.PaymentDTO;
-import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
-import com.projeto.sol_de_verao.model.enums.PaymentMethod;
+import com.projeto.sol_de_verao.dto.ProductQuantitySaleDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ProductSaleCreateDTO {
 
+    @NotNull(message = "Customer ID cannot be empty.")
+    @Positive(message = "Customer ID cannot be 0 or negative.")
     private Long customer;
 
+    @NotNull(message = "Employee ID cannot be empty.")
+    @Positive(message = "Employee ID cannot be 0 or negative.")
     private Long employee;
 
-    private List<ProductQuantityDTO> productQuantity;
+    @NotEmpty(message = "A sale must include products.")
+    @Valid
+    private List<ProductQuantitySaleDTO> productQuantity;
 
+    @NotNull(message = "The payment method cannot be empty.")
+    @Valid
     private PaymentDTO paymentMethod;
 
     public ProductSaleCreateDTO() {
     }
 
-    public ProductSaleCreateDTO(Long customer, Long employee, List<ProductQuantityDTO> productQuantity, PaymentDTO paymentMethod) {
+    public ProductSaleCreateDTO(Long customer, Long employee, List<ProductQuantitySaleDTO> productQuantity, PaymentDTO paymentMethod) {
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
@@ -43,11 +54,11 @@ public class ProductSaleCreateDTO {
         this.employee = employee;
     }
 
-    public List<ProductQuantityDTO> getProductQuantity() {
+    public List<ProductQuantitySaleDTO> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(List<ProductQuantityDTO> productQuantity) {
+    public void setProductQuantity(List<ProductQuantitySaleDTO> productQuantity) {
         this.productQuantity = productQuantity;
     }
 

@@ -23,7 +23,6 @@ public class CustomerCreateDTO {
     @Size(min = 10, max = 11, message = "The phone number must have 10 or 11 characters.")
     private String phone;
 
-    @NotNull(message = "The credit field cannot be empty.")
     private Boolean credit;
 
     @NotNull(message = "The type field cannot be empty.")
@@ -42,6 +41,14 @@ public class CustomerCreateDTO {
         this.cpf = cpf;
         this.phone = phone;
         this.credit = credit;
+        this.type = type;
+        this.dateBirth = dateBirth;
+    }
+
+    public CustomerCreateDTO(String name, String cpf, String phone, TypeCustomer type, LocalDate dateBirth) {
+        this.name = name;
+        this.cpf = cpf;
+        this.phone = phone;
         this.type = type;
         this.dateBirth = dateBirth;
     }

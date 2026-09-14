@@ -1,26 +1,37 @@
 package com.projeto.sol_de_verao.dto.createDTO;
 
 import com.projeto.sol_de_verao.dto.PaymentDTO;
-import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
-import com.projeto.sol_de_verao.model.enums.PaymentMethod;
+import com.projeto.sol_de_verao.dto.ProductQuantityPurchaseDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ProductPurchaseCreateDTO {
 
+    @NotNull(message = "Customer ID cannot be empty.")
+    @Positive(message = "Customer ID cannot be 0 or negative.")
     private Long customer;
 
+    @NotNull(message = "Employee ID cannot be empty.")
+    @Positive(message = "Employee ID cannot be 0 or negative.")
     private Long employee;
 
-    private List<ProductQuantityDTO> productQuantity;
+    @NotEmpty(message = "A purchase must include products.")
+    @Valid
+    private List<ProductQuantityPurchaseDTO> productQuantity;
 
+    @NotNull(message = "The payment method cannot be empty.")
+    @Valid
     private PaymentDTO paymentMethod;
 
     public ProductPurchaseCreateDTO() {
     }
 
-    public ProductPurchaseCreateDTO(Long customer, Long employee, List<ProductQuantityDTO> productQuantity, PaymentDTO paymentMethod) {
+    public ProductPurchaseCreateDTO(Long customer, Long employee, List<ProductQuantityPurchaseDTO> productQuantity, PaymentDTO paymentMethod) {
         this.customer = customer;
         this.employee = employee;
         this.productQuantity = productQuantity;
@@ -43,11 +54,11 @@ public class ProductPurchaseCreateDTO {
         this.employee = employee;
     }
 
-    public List<ProductQuantityDTO> getProductQuantity() {
+    public List<ProductQuantityPurchaseDTO> getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(List<ProductQuantityDTO> productQuantity) {
+    public void setProductQuantity(List<ProductQuantityPurchaseDTO> productQuantity) {
         this.productQuantity = productQuantity;
     }
 
