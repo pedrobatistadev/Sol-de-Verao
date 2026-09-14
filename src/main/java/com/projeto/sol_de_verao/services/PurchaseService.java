@@ -2,13 +2,14 @@ package com.projeto.sol_de_verao.services;
 
 import com.projeto.sol_de_verao.controllers.PurchaseController;
 import com.projeto.sol_de_verao.dto.ProductPurchaseDTO;
-import com.projeto.sol_de_verao.dto.ProductQuantityDTO;
+import com.projeto.sol_de_verao.dto.ProductQuantityPurchaseDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
 import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.*;
+import com.projeto.sol_de_verao.model.enums.PaymentMethod;
 import com.projeto.sol_de_verao.model.enums.TypeCustomer;
 import com.projeto.sol_de_verao.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,7 +17,6 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -62,8 +62,8 @@ public class PurchaseService {
     public ProductPurchaseDTO create(ProductPurchaseCreateDTO productPurchaseCreateDTO) {
         logger.warn("Creating Purchase");
 
-        Customer customer = repositoryCustomer.findById(productPurchaseCreateDTO.getCustomer()).orElseThrow(() -> new EntityNotFoundException("ID field of Customer not found"));
-        if (!customer.getEnabled() || customer.getType() != TypeCustomer.SUPPLIER) {
+        Customer supplier = repositoryCustomer.findById(productPurchaseCreateDTO.getCustomer()).orElseThrow(() -> new EntityNotFoundException("ID field of Customer not found"));
+        if (!supplier.getEnabled() || supplier.getType() != TypeCustomer.SUPPLIER) {
             throw new IllegalStateException("This Customer is disabled or has the wrong type.");
         }
 
@@ -72,45 +72,57 @@ public class PurchaseService {
             throw new IllegalStateException("This Employee is disabled.");
         }
 
-        Purchase purchase = repositoryPurchase.save(new Purchase(customer,employee,productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod(),productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(),new Date()));
+        Purchase purchase = repositoryPurchase.save(new Purchase(
+                supplier,
+                employee,
+                productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod(),
+                productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(),
+                new Date()));
 
         Double sum = 0.0;
         Double totalValue = 0.0;
 
-        for (ProductQuantityDTO products : productPurchaseCreateDTO.getProductQuantity()) {
+        for (ProductQuantityPurchaseDTO products : productPurchaseCreateDTO.getProductQuantity()) {
             Product product = repositoryProduct.findById(products.getProduct()).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found"));
-            if (!product.getEnabled() || product.getQuantity() <= 0) {
-                throw new IllegalStateException("This Product is disabled or out of stock.");
-            } else if(product.getQuantity() < products.getQuantity()) {
-                throw new IllegalStateException("Insufficient product stock !");
+            if (!product.getEnabled()) {
+                throw new IllegalStateException("This Product is disabled.");
             }
 
-            product.setQuantity(product.getQuantity() - products.getQuantity());
+            product.setQuantity(product.getQuantity() + products.getQuantity());
             repositoryProduct.save(product);
 
-            Double unitPrice = product.getUnitPrice();
-            totalValue = products.getQuantity() * unitPrice;
+            totalValue = products.getQuantity() * products.getCost();
             sum += totalValue;
 
             repositoryProductPurchase.save(new ProductPurchase(purchase,product,products.getQuantity(),totalValue));
         }
 
-        if (productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments() == 1) {
-            repositoryAccountsPayable.save(new AccountsPayable(purchase,1,sum, LocalDate.now().plusMonths(1), new Date()));
+        if (productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments() == 1 && productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.CASH) {
+            repositoryAccountsPayable.save(new AccountsPayable(purchase,1,sum, new Date()));
         } else {
-            if (customer.getCredit()) {
+            if (supplier.getCredit() && productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.INSTALLMENTS) {
                 Double installment = sum / productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments();
                 for (int i = 1; i <= productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(); i++) {
-                    repositoryAccountsPayable.save(new AccountsPayable(purchase, i, installment, LocalDate.now().plusMonths(i), new Date()));
+                    repositoryAccountsPayable.save(new AccountsPayable(
+                            purchase,
+                            i,
+                            installment,
+                            LocalDate.now().plusMonths(i),
+                            new Date()));
                 }
             } else {
-                throw new IllegalStateException("This customer cannot pay in installments.");
+                throw new IllegalStateException("You cannot pay in installments, or the payment type is incorrect.");
             }
         }
 
-        return new ProductPurchaseDTO(purchase.getId(), ObjectMapper.parseObject(customer, CustomerDTORes.class),
-                ObjectMapper.parseObject(employee, EmployeeDTORes.class),productPurchaseCreateDTO.getPaymentMethod(),
-                productPurchaseCreateDTO.getProductQuantity(),sum, new Date());
+        return new ProductPurchaseDTO(
+                purchase.getId(),
+                ObjectMapper.parseObject(supplier, CustomerDTORes.class),
+                ObjectMapper.parseObject(employee, EmployeeDTORes.class),
+                productPurchaseCreateDTO.getPaymentMethod(),
+                productPurchaseCreateDTO.getProductQuantity(),
+                sum,
+                new Date());
     }
 
     public PagedModel<EntityModel<ProductPurchaseDTO>> findAll(Pageable pageable) {

@@ -49,6 +49,7 @@ public class CustomerService {
 
         Customer customer = ObjectMapper.parseObject(customerCreateDTO, Customer.class);
         customer.setEnabled(true);
+        customer.setCredit(true);
         customer.setCreationDate(new Date());
 
         Customer saved = repository.save(customer);
