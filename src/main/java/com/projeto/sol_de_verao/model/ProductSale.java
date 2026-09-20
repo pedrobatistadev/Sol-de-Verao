@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -27,12 +28,12 @@ public class ProductSale implements Serializable {
     private Integer quantity;
 
     @Column(name = "total_value", nullable = false)
-    private Double totalValue;
+    private BigDecimal totalValue;
 
     public ProductSale() {
     }
 
-    public ProductSale(Sale sale, Product product, Integer quantity, Double totalValue) {
+    public ProductSale(Sale sale, Product product, Integer quantity, BigDecimal totalValue) {
         this.sale = sale;
         this.product = product;
         this.quantity = quantity;
@@ -71,11 +72,11 @@ public class ProductSale implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 

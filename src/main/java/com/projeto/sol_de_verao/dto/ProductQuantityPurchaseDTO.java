@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductQuantityPurchaseDTO implements Serializable {
@@ -16,7 +17,7 @@ public class ProductQuantityPurchaseDTO implements Serializable {
 
     @NotNull(message = "The product cost cannot be empty.")
     @Positive(message = "The product cost cannot be 0 or negative.")
-    private Double cost;
+    private BigDecimal cost;
 
     @NotNull(message = "The quantity cannot be empty.")
     @Positive(message = "The quantity cannot be 0 or negative.")
@@ -25,7 +26,7 @@ public class ProductQuantityPurchaseDTO implements Serializable {
     public ProductQuantityPurchaseDTO() {
     }
 
-    public ProductQuantityPurchaseDTO(Long product, Double cost, Integer quantity) {
+    public ProductQuantityPurchaseDTO(Long product, BigDecimal cost, Integer quantity) {
         this.product = product;
         this.cost = cost;
         this.quantity = quantity;
@@ -39,11 +40,11 @@ public class ProductQuantityPurchaseDTO implements Serializable {
         this.product = product;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

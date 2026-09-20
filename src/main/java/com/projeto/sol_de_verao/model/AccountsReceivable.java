@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
@@ -28,9 +29,9 @@ public class AccountsReceivable implements Serializable {
     private Date payment;
 
     @Column(name = "total_value", nullable = false)
-    private Double totalValue;
+    private BigDecimal totalValue;
 
-    @Column(name = "due_date", nullable = false)
+    @Column(name = "due_date")
     private LocalDate dueDate;
 
     @Column(name = "creation_date", nullable = false)
@@ -39,7 +40,7 @@ public class AccountsReceivable implements Serializable {
     public AccountsReceivable() {
     }
 
-    public AccountsReceivable(Sale sale, Integer installmentNumber, Date payment, Double totalValue, LocalDate dueDate, Date creationDate) {
+    public AccountsReceivable(Sale sale, Integer installmentNumber, Date payment, BigDecimal totalValue, LocalDate dueDate, Date creationDate) {
         this.sale = sale;
         this.installmentNumber = installmentNumber;
         this.payment = payment;
@@ -48,11 +49,18 @@ public class AccountsReceivable implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public AccountsReceivable(Sale sale, Integer installmentNumber, Double totalValue, LocalDate dueDate, Date creationDate) {
+    public AccountsReceivable(Sale sale, Integer installmentNumber, BigDecimal totalValue, LocalDate dueDate, Date creationDate) {
         this.sale = sale;
         this.installmentNumber = installmentNumber;
         this.totalValue = totalValue;
         this.dueDate = dueDate;
+        this.creationDate = creationDate;
+    }
+
+    public AccountsReceivable(Sale sale, Integer installmentNumber, BigDecimal totalValue, Date creationDate) {
+        this.sale = sale;
+        this.installmentNumber = installmentNumber;
+        this.totalValue = totalValue;
         this.creationDate = creationDate;
     }
 
@@ -88,11 +96,11 @@ public class AccountsReceivable implements Serializable {
         this.payment = payment;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 

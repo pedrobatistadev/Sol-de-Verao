@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class Product implements Serializable {
     private Category category;
 
     @Column(name = "unit_price", nullable = false)
-    private Double unitPrice;
+    private BigDecimal unitPrice;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -45,7 +46,7 @@ public class Product implements Serializable {
         this.enabled = true;
     }
 
-    public Product(String name, Category category, Double unitPrice, Integer quantity, Inventory inventories, Date creationDate) {
+    public Product(String name, Category category, BigDecimal unitPrice, Integer quantity, Inventory inventories, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
@@ -55,7 +56,7 @@ public class Product implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Product(String name, Category category, Double unitPrice, Integer quantity, Inventory inventory) {
+    public Product(String name, Category category, BigDecimal unitPrice, Integer quantity, Inventory inventory) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
@@ -87,11 +88,11 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public Double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

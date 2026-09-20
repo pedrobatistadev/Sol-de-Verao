@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductCreateDTO {
@@ -17,7 +18,7 @@ public class ProductCreateDTO {
 
     @NotNull(message = "The unit price field cannot be empty")
     @Positive(message = "The value of unitPrice must be greater than zero.")
-    private Double unitPrice;
+    private BigDecimal unitPrice;
 
     @NotNull(message = "The quantity field cannot be empty or 0.")
     @Positive(message = "The value of quantity must be greater than zero.")
@@ -29,7 +30,7 @@ public class ProductCreateDTO {
     public ProductCreateDTO () {
     }
 
-    public ProductCreateDTO(String name, String category, Double unitPrice, Integer quantity, String inventory) {
+    public ProductCreateDTO(String name, String category, BigDecimal unitPrice, Integer quantity, String inventory) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
@@ -53,11 +54,11 @@ public class ProductCreateDTO {
         this.category = category;
     }
 
-    public Double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

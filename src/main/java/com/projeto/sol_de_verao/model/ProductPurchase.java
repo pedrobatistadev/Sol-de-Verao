@@ -3,10 +3,11 @@ package com.projeto.sol_de_verao.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "product_purchase", uniqueConstraints = {@UniqueConstraint(columnNames = {"purchase_id", "product_id"})})
+@Table(name = "products_purchases", uniqueConstraints = {@UniqueConstraint(columnNames = {"purchase_id", "product_id"})})
 public class ProductPurchase implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,15 +28,55 @@ public class ProductPurchase implements Serializable {
     private Integer quantity;
 
     @Column(name = "total_value", nullable = false)
-    private Double totalValue;
+    private BigDecimal totalValue;
 
     public ProductPurchase() {
     }
 
-    public ProductPurchase(Purchase purchase, Product product, Integer quantity, Double totalValue) {
+    public ProductPurchase(Purchase purchase, Product product, Integer quantity, BigDecimal totalValue) {
         this.purchase = purchase;
         this.product = product;
         this.quantity = quantity;
+        this.totalValue = totalValue;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 

@@ -3,6 +3,7 @@ package com.projeto.sol_de_verao.model;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class AccountsPayable implements Serializable {
     private Date payment;
 
     @Column(name = "total_value", nullable = false)
-    private Double totalValue;
+    private BigDecimal totalValue;
 
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
@@ -40,7 +41,7 @@ public class AccountsPayable implements Serializable {
 
     }
 
-    public AccountsPayable(Purchase purchase, Integer installmentNumber, Date payment, Double totalValue, LocalDate dueDate, Date creationDate) {
+    public AccountsPayable(Purchase purchase, Integer installmentNumber, Date payment, BigDecimal totalValue, LocalDate dueDate, Date creationDate) {
         this.purchase = purchase;
         this.installmentNumber = installmentNumber;
         this.payment = payment;
@@ -49,11 +50,18 @@ public class AccountsPayable implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public AccountsPayable(Purchase purchase, Integer installmentNumber, Double totalValue, LocalDate dueDate, Date creationDate) {
+    public AccountsPayable(Purchase purchase, Integer installmentNumber, BigDecimal totalValue, LocalDate dueDate, Date creationDate) {
         this.purchase = purchase;
         this.installmentNumber = installmentNumber;
         this.totalValue = totalValue;
         this.dueDate = dueDate;
+        this.creationDate = creationDate;
+    }
+
+    public AccountsPayable(Purchase purchase, Integer installmentNumber, BigDecimal totalValue, Date creationDate) {
+        this.purchase = purchase;
+        this.installmentNumber = installmentNumber;
+        this.totalValue = totalValue;
         this.creationDate = creationDate;
     }
 
@@ -89,11 +97,11 @@ public class AccountsPayable implements Serializable {
         this.payment = payment;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 

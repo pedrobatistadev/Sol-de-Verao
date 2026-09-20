@@ -1,13 +1,12 @@
 package com.projeto.sol_de_verao.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.projeto.sol_de_verao.model.Category;
-import com.projeto.sol_de_verao.model.Inventory;
 import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,13 +19,13 @@ public class ProductDTO extends RepresentationModel<ProductDTO> implements Seria
 
     private String name;
 
-    private Category category;
+    private CategoryDTO category;
 
-    private Double unitPrice;
+    private BigDecimal unitPrice;
 
     private Integer quantity;
 
-    private Inventory inventory;
+    private InventoryDTO inventory;
 
     private Boolean enabled;
 
@@ -37,7 +36,7 @@ public class ProductDTO extends RepresentationModel<ProductDTO> implements Seria
         this.enabled = true;
     }
 
-    public ProductDTO(String name, Category category, Double unitPrice,Integer quantity, Inventory inventory, Date creationDate) {
+    public ProductDTO(String name, CategoryDTO category, BigDecimal unitPrice,Integer quantity, InventoryDTO inventory, Date creationDate) {
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
@@ -63,19 +62,19 @@ public class ProductDTO extends RepresentationModel<ProductDTO> implements Seria
         this.name = name;
     }
 
-    public Category getCategory() {
+    public CategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryDTO category) {
         this.category = category;
     }
 
-    public Double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -87,11 +86,11 @@ public class ProductDTO extends RepresentationModel<ProductDTO> implements Seria
         this.quantity = quantity;
     }
 
-    public Inventory getInventory() {
+    public InventoryDTO getInventory() {
         return inventory;
     }
 
-    public void setInventory(Inventory inventory) {
+    public void setInventory(InventoryDTO inventory) {
         this.inventory = inventory;
     }
 

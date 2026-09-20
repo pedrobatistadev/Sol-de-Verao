@@ -6,6 +6,7 @@ import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> 
 
     private List<ProductQuantityPurchaseDTO> productQuantity;
 
-    private Double totalValue;
+    private BigDecimal totalValue;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date creationDate;
@@ -32,7 +33,7 @@ public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> 
     public ProductPurchaseDTO() {
     }
 
-    public ProductPurchaseDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantityPurchaseDTO> productQuantity, Double totalValue, Date creationDate) {
+    public ProductPurchaseDTO(Long id, CustomerDTORes customer, EmployeeDTORes employee, PaymentDTO paymentMethod, List<ProductQuantityPurchaseDTO> productQuantity, BigDecimal totalValue, Date creationDate) {
         this.id = id;
         this.customer = customer;
         this.employee = employee;
@@ -82,11 +83,11 @@ public class ProductPurchaseDTO extends RepresentationModel<ProductPurchaseDTO> 
         this.paymentMethod = paymentMethod;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 
