@@ -3,10 +3,13 @@ package com.projeto.sol_de_verao.services;
 import com.projeto.sol_de_verao.controllers.SaleController;
 import com.projeto.sol_de_verao.dto.ProductQuantitySaleDTO;
 import com.projeto.sol_de_verao.dto.ProductSaleDTO;
+import com.projeto.sol_de_verao.dto.SaleDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductSaleCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
+import com.projeto.sol_de_verao.exception.CreditNotAvailableException;
 import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
+import com.projeto.sol_de_verao.exception.InvalidPaymentMethodException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.*;
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
@@ -24,6 +27,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -57,7 +62,7 @@ public class SaleService {
     @Autowired ProductRepository repositoryProduct;
 
     @Autowired
-    public PagedResourcesAssembler assembler;
+    private PagedResourcesAssembler assembler;
 
     @Transactional
     public ProductSaleDTO create(ProductSaleCreateDTO productSaleCreateDTO) {
@@ -80,8 +85,8 @@ public class SaleService {
                 productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments(),
                 new Date()));
 
-        Double sum = 0.0;
-        Double totalValue = 0.0;
+        BigDecimal sum = BigDecimal.ZERO;
+        PaymentMethod paymentMethod = productSaleCreateDTO.getPaymentMethod().getPaymentMethod();
 
         for (ProductQuantitySaleDTO products : productSaleCreateDTO.getProductQuantity()) {
             Product product = repositoryProduct.findById(products.getProduct()).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found"));
@@ -94,33 +99,37 @@ public class SaleService {
             product.setQuantity(product.getQuantity() - products.getQuantity());
             repositoryProduct.save(product);
 
-            Double unitPrice = product.getUnitPrice();
-            totalValue = products.getQuantity() * unitPrice;
-            sum += totalValue;
+            BigDecimal unitPrice = product.getUnitPrice();
+            BigDecimal totalValue = unitPrice.multiply(BigDecimal.valueOf(products.getQuantity()));
+            sum = sum.add(totalValue);
 
             repositoryProductSale.save(new ProductSale(sale,product,products.getQuantity(),totalValue));
         }
 
-        if (productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments() == 1 && productSaleCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.CASH) {
-            repositoryAccountsReceivable.save(new AccountsReceivable(sale,1,sum, new Date()));
-        } else {
-            if (customer.getCredit() && productSaleCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.INSTALLMENTS) {
-                Double installment = sum / productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments();
-                for (int i = 1; i <= productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments(); i++) {
-                    repositoryAccountsReceivable.save(new AccountsReceivable(
-                            sale,
-                            i,
-                            installment,
-                            LocalDate.now().plusMonths(i),
-                            new Date()));
-                }
-            } else {
-                throw new IllegalStateException("This customer cannot pay in installments, or the payment type is incorrect.");
+        if (paymentMethod.equals(PaymentMethod.CASH) ||
+                paymentMethod.equals(PaymentMethod.PIX) ||
+                paymentMethod.equals(PaymentMethod.DEBIT_CARD)) {
+
+            if (productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments() != 1) {
+                throw new InvalidPaymentMethodException("Cash, PIX and debit card payments cannot be divided into installments.");
+            }
+
+            repositoryAccountsReceivable.save(new AccountsReceivable(sale,1,sum,new Date()));
+
+        } else if (paymentMethod.equals(PaymentMethod.INSTALLMENTS) ||
+                paymentMethod.equals(PaymentMethod.CREDIT_CARD)){
+
+            if (!customer.getCredit()) {
+                throw new CreditNotAvailableException("Customer does not have credit available");
+            }
+
+            BigDecimal installment = sum.divide(BigDecimal.valueOf(productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments()),2, RoundingMode.DOWN);
+            for (int i = 1; i <= productSaleCreateDTO.getPaymentMethod().getNumberOfInstallments(); i++) {
+                repositoryAccountsReceivable.save(new AccountsReceivable(sale,i,installment,LocalDate.now().plusMonths(i),new Date()));
             }
         }
 
-        return new ProductSaleDTO(
-                sale.getId(),
+        return new ProductSaleDTO(sale.getId(),
                 ObjectMapper.parseObject(customer, CustomerDTORes.class),
                 ObjectMapper.parseObject(employee, EmployeeDTORes.class),
                 productSaleCreateDTO.getPaymentMethod(),
@@ -129,22 +138,25 @@ public class SaleService {
                 new Date());
     }
 
-    public ProductSaleDTO findById(Long id) {
+    public SaleDTO findById(Long id) {
         logger.warn("Finding Sale");
 
-        ProductSaleDTO purchase = ObjectMapper.parseObject(repositorySale.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found")),ProductSaleDTO.class);
+        Sale sale = repositorySale.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found"));
 
-        Hateoas(purchase);
+        SaleDTO saleDTO = ObjectMapper.parseObject(sale, SaleDTO.class);
 
-        return purchase;
+        Hateoas(saleDTO);
+
+        return saleDTO;
     }
 
-    public PagedModel<EntityModel<ProductSaleDTO>> findAll(Pageable pageable) {
+    public PagedModel<EntityModel<SaleDTO>> findAll(Pageable pageable) {
+        logger.warn("Finding All Sale");
 
-        Page<Sale> purchase = repositorySale.findAll(pageable);
+        Page<Sale> sale = repositorySale.findAll(pageable);
 
-        Page<ProductSaleDTO> productSaleDTOS = purchase.map((x) -> {
-            ProductSaleDTO dto = ObjectMapper.parseObject(x, ProductSaleDTO.class);
+        Page<SaleDTO> productSaleDTOS = sale.map((sales) -> {
+            SaleDTO dto = ObjectMapper.parseObject(sales, SaleDTO.class);
             Hateoas(dto);
             return dto;
         });
@@ -164,14 +176,14 @@ public class SaleService {
         }
     }
 
-    private void Hateoas(ProductSaleDTO productSaleDTO) {
-        productSaleDTO.add(linkTo(methodOn(SaleController.class).create(ObjectMapper.parseObject(productSaleDTO, ProductSaleCreateDTO.class)))
+    private void Hateoas(SaleDTO saleDTO) {
+        saleDTO.add(linkTo(methodOn(SaleController.class).create(ObjectMapper.parseObject(saleDTO, ProductSaleCreateDTO.class)))
                 .withRel("create").withType("POST"));
-        productSaleDTO.add(linkTo(methodOn(SaleController.class).findById(productSaleDTO.getId()))
+        saleDTO.add(linkTo(methodOn(SaleController.class).findById(saleDTO.getId()))
                 .withSelfRel().withType(" GET"));
-        productSaleDTO.add(linkTo(methodOn(SaleController.class).findAll(0,12,"asc"))
+        saleDTO.add(linkTo(methodOn(SaleController.class).findAll(0,12,"asc"))
                 .withRel("findAll").withType("GET"));
-        productSaleDTO.add(linkTo(methodOn(SaleController.class).delete(productSaleDTO.getId()))
+        saleDTO.add(linkTo(methodOn(SaleController.class).delete(saleDTO.getId()))
                 .withRel("delete").withType("DELETE"));
     }
 }

@@ -3,10 +3,14 @@ package com.projeto.sol_de_verao.services;
 import com.projeto.sol_de_verao.controllers.PurchaseController;
 import com.projeto.sol_de_verao.dto.ProductPurchaseDTO;
 import com.projeto.sol_de_verao.dto.ProductQuantityPurchaseDTO;
+import com.projeto.sol_de_verao.dto.ProductQuantitySaleDTO;
+import com.projeto.sol_de_verao.dto.ProductSaleDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
+import com.projeto.sol_de_verao.dto.createDTO.ProductSaleCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
 import com.projeto.sol_de_verao.dto.internal.EmployeeDTORes;
 import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
+import com.projeto.sol_de_verao.exception.InvalidPaymentMethodException;
 import com.projeto.sol_de_verao.mapper.ObjectMapper;
 import com.projeto.sol_de_verao.model.*;
 import com.projeto.sol_de_verao.model.enums.PaymentMethod;
@@ -24,6 +28,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -62,8 +68,8 @@ public class PurchaseService {
     public ProductPurchaseDTO create(ProductPurchaseCreateDTO productPurchaseCreateDTO) {
         logger.warn("Creating Purchase");
 
-        Customer supplier = repositoryCustomer.findById(productPurchaseCreateDTO.getCustomer()).orElseThrow(() -> new EntityNotFoundException("ID field of Customer not found"));
-        if (!supplier.getEnabled() || supplier.getType() != TypeCustomer.SUPPLIER) {
+        Customer customer = repositoryCustomer.findById(productPurchaseCreateDTO.getCustomer()).orElseThrow(() -> new EntityNotFoundException("ID field of Customer not found"));
+        if (!customer.getEnabled() || customer.getType() != TypeCustomer.SUPPLIER) {
             throw new IllegalStateException("This Customer is disabled or has the wrong type.");
         }
 
@@ -73,14 +79,14 @@ public class PurchaseService {
         }
 
         Purchase purchase = repositoryPurchase.save(new Purchase(
-                supplier,
+                customer,
                 employee,
                 productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod(),
                 productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(),
                 new Date()));
 
-        Double sum = 0.0;
-        Double totalValue = 0.0;
+        BigDecimal sum = BigDecimal.ZERO;
+        PaymentMethod paymentMethod = productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod();
 
         for (ProductQuantityPurchaseDTO products : productPurchaseCreateDTO.getProductQuantity()) {
             Product product = repositoryProduct.findById(products.getProduct()).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found"));
@@ -91,33 +97,33 @@ public class PurchaseService {
             product.setQuantity(product.getQuantity() + products.getQuantity());
             repositoryProduct.save(product);
 
-            totalValue = products.getQuantity() * products.getCost();
-            sum += totalValue;
+            BigDecimal totalValue = products.getCost().multiply(BigDecimal.valueOf(products.getQuantity()));
+            sum = sum.add(totalValue);
 
             repositoryProductPurchase.save(new ProductPurchase(purchase,product,products.getQuantity(),totalValue));
         }
 
-        if (productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments() == 1 && productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.CASH) {
-            repositoryAccountsPayable.save(new AccountsPayable(purchase,1,sum, new Date()));
-        } else {
-            if (supplier.getCredit() && productPurchaseCreateDTO.getPaymentMethod().getPaymentMethod() == PaymentMethod.INSTALLMENTS) {
-                Double installment = sum / productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments();
-                for (int i = 1; i <= productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(); i++) {
-                    repositoryAccountsPayable.save(new AccountsPayable(
-                            purchase,
-                            i,
-                            installment,
-                            LocalDate.now().plusMonths(i),
-                            new Date()));
-                }
-            } else {
-                throw new IllegalStateException("You cannot pay in installments, or the payment type is incorrect.");
+        if (paymentMethod.equals(PaymentMethod.CASH) ||
+                paymentMethod.equals(PaymentMethod.PIX) ||
+                paymentMethod.equals(PaymentMethod.DEBIT_CARD)) {
+
+            if (productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments() != 1) {
+                throw new InvalidPaymentMethodException("Cash, PIX and debit card payments cannot be divided into installments.");
+            }
+
+            repositoryAccountsPayable.save(new AccountsPayable(purchase,1,sum,new Date()));
+
+        } else if (paymentMethod.equals(PaymentMethod.INSTALLMENTS) ||
+                paymentMethod.equals(PaymentMethod.CREDIT_CARD)){
+
+            BigDecimal installment = sum.divide(BigDecimal.valueOf(productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments()),2, RoundingMode.DOWN);
+            for (int i = 1; i <= productPurchaseCreateDTO.getPaymentMethod().getNumberOfInstallments(); i++) {
+                repositoryAccountsPayable.save(new AccountsPayable(purchase,i,installment,LocalDate.now().plusMonths(i),new Date()));
             }
         }
 
-        return new ProductPurchaseDTO(
-                purchase.getId(),
-                ObjectMapper.parseObject(supplier, CustomerDTORes.class),
+        return new ProductPurchaseDTO(purchase.getId(),
+                ObjectMapper.parseObject(customer, CustomerDTORes.class),
                 ObjectMapper.parseObject(employee, EmployeeDTORes.class),
                 productPurchaseCreateDTO.getPaymentMethod(),
                 productPurchaseCreateDTO.getProductQuantity(),
