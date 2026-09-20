@@ -42,5 +42,13 @@ public interface CustomerControllerDocs {
     @Operation(summary = "Disable Customer", description = "Disabling Customer", tags = {"Customer"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
     ResponseEntity<CustomerDTO> disable(@PathVariable Long id);
+
+    @Operation(summary = "Enable Credit", description = "Enable Credit", tags = {"Customer"}, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
+    ResponseEntity<CustomerDTO> enableCredit(@PathVariable Long id);
+
+    @Operation(summary = "Disable Credit", description = "Disable Credit", tags = {"Customer"}, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class))))})
+    ResponseEntity<CustomerDTO> disableCredit(@PathVariable Long id);
     
 }

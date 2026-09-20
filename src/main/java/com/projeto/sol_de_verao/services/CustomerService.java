@@ -49,7 +49,7 @@ public class CustomerService {
 
         Customer customer = ObjectMapper.parseObject(customerCreateDTO, Customer.class);
         customer.setEnabled(true);
-        customer.setCredit(true);
+        customer.setCredit(false);
         customer.setCreationDate(new Date());
 
         Customer saved = repository.save(customer);
@@ -74,7 +74,6 @@ public class CustomerService {
         customer.setName(customerCreateDTO.getName());
         customer.setCpf(customerCreateDTO.getCpf());
         customer.setPhone(customerCreateDTO.getPhone());
-        customer.setCredit(customerCreateDTO.getCredit());
         customer.setType(customerCreateDTO.getType());
         customer.setDateBirth(customerCreateDTO.getDateBirth());
 
@@ -127,6 +126,36 @@ public class CustomerService {
         Hateoas(result);
 
         return result;
+    }
+
+    @Transactional
+    public CustomerDTO enableCredit(Long id) {
+        logger.warn("Enable Credit");
+
+        Customer customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        customer.setCredit(true);
+
+        CustomerDTO customerDTO = ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
+
+        Hateoas(customerDTO);
+
+        return customerDTO;
+    }
+
+    @Transactional
+    public CustomerDTO disableCredit(Long id) {
+        logger.warn("Disable Credit");
+
+        Customer customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field not found"));
+
+        customer.setCredit(false);
+
+        CustomerDTO customerDTO = ObjectMapper.parseObject(repository.save(customer), CustomerDTO.class);
+
+        Hateoas(customerDTO);
+
+        return customerDTO;
     }
 
     public CustomerDTO findById(Long id) {

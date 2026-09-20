@@ -54,6 +54,18 @@ public class CustomerController implements CustomerControllerDocs {
         return ResponseEntity.status(HttpStatus.OK).body(service.disable(id));
     }
 
+    @PatchMapping(value = "/enable-credit/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
+    public ResponseEntity<CustomerDTO> enableCredit(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.enableCredit(id));
+    }
+
+    @PatchMapping(value = "/disable-credit/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Override
+    public ResponseEntity<CustomerDTO> disableCredit(Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.disableCredit(id));
+    }
+
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
     public ResponseEntity<PagedModel<EntityModel<CustomerDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
