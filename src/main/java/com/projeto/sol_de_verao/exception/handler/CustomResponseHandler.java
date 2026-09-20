@@ -1,7 +1,9 @@
 package com.projeto.sol_de_verao.exception.handler;
 
+import com.projeto.sol_de_verao.exception.CreditNotAvailableException;
 import com.projeto.sol_de_verao.exception.DatabaseIntegrationException;
 import com.projeto.sol_de_verao.exception.ExceptionResponse;
+import com.projeto.sol_de_verao.exception.InvalidPaymentMethodException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,22 @@ public class CustomResponseHandler {
 
     @ExceptionHandler(DatabaseIntegrationException.class)
     public final ResponseEntity<ExceptionResponse> handlerForeignKeyException(Exception ex, WebRequest request) {
+        String data = sdf.format(new Date());
+        ExceptionResponse response = new ExceptionResponse(ex.getMessage(),request.getDescription(false), data);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(InvalidPaymentMethodException.class)
+    public final ResponseEntity<ExceptionResponse> handlerInvalidPaymentMethodException(Exception ex, WebRequest request) {
+        String data = sdf.format(new Date());
+        ExceptionResponse response = new ExceptionResponse(ex.getMessage(),request.getDescription(false), data);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(CreditNotAvailableException.class)
+    public final ResponseEntity<ExceptionResponse> handlerCreditNotAvailableException(Exception ex, WebRequest request) {
         String data = sdf.format(new Date());
         ExceptionResponse response = new ExceptionResponse(ex.getMessage(),request.getDescription(false), data);
 
