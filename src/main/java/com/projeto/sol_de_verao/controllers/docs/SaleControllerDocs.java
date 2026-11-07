@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.controllers.docs;
 
 import com.projeto.sol_de_verao.dto.ProductSaleDTO;
+import com.projeto.sol_de_verao.dto.SaleDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductSaleCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -23,13 +24,13 @@ public interface SaleControllerDocs {
 
     @Operation(summary = "Find Sale", description = "Find Sale", tags = {"Sale"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductSaleDTO.class))))})
-    ResponseEntity<ProductSaleDTO> findById(@PathVariable Long id);
+    ResponseEntity<SaleDTO> findById(@PathVariable Long id);
 
     @Operation(summary = "Find All Sale", description = "Find All Sale", tags = {"Sale"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductSaleDTO.class))))})
-    ResponseEntity<PagedModel<EntityModel<ProductSaleDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                                @RequestParam(value = "size", defaultValue = "12") Integer size,
-                                                                @RequestParam(value = "direction", defaultValue = "asc") String direction);
+    ResponseEntity<PagedModel<EntityModel<SaleDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "size", defaultValue = "12") Integer size,
+                                                             @RequestParam(value = "direction", defaultValue = "asc") String direction);
 
     @Operation(summary = "Delete Sale", description = "Delete Sale", tags = {"Sale"}, responses = {
             @ApiResponse(description = "Success", responseCode = "204")})

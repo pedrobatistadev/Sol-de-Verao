@@ -141,7 +141,7 @@ public class SaleService {
     public SaleDTO findById(Long id) {
         logger.warn("Finding Sale");
 
-        Sale sale = repositorySale.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found"));
+        Sale sale = repositorySale.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Sale not found"));
 
         SaleDTO saleDTO = ObjectMapper.parseObject(sale, SaleDTO.class);
 
@@ -177,7 +177,7 @@ public class SaleService {
     }
 
     private void Hateoas(SaleDTO saleDTO) {
-        saleDTO.add(linkTo(methodOn(SaleController.class).create(ObjectMapper.parseObject(saleDTO, ProductSaleCreateDTO.class)))
+        saleDTO.add(linkTo(methodOn(SaleController.class).create(new ProductSaleCreateDTO()))
                 .withRel("create").withType("POST"));
         saleDTO.add(linkTo(methodOn(SaleController.class).findById(saleDTO.getId()))
                 .withSelfRel().withType(" GET"));
