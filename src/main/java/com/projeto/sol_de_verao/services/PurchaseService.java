@@ -1,10 +1,7 @@
 package com.projeto.sol_de_verao.services;
 
 import com.projeto.sol_de_verao.controllers.PurchaseController;
-import com.projeto.sol_de_verao.dto.ProductPurchaseDTO;
-import com.projeto.sol_de_verao.dto.ProductQuantityPurchaseDTO;
-import com.projeto.sol_de_verao.dto.ProductQuantitySaleDTO;
-import com.projeto.sol_de_verao.dto.ProductSaleDTO;
+import com.projeto.sol_de_verao.dto.*;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductSaleCreateDTO;
 import com.projeto.sol_de_verao.dto.internal.CustomerDTORes;
@@ -131,23 +128,23 @@ public class PurchaseService {
                 new Date());
     }
 
-    public PagedModel<EntityModel<ProductPurchaseDTO>> findAll(Pageable pageable) {
+    public PagedModel<EntityModel<PurchaseDTO>> findAll(Pageable pageable) {
 
         Page<Purchase> purchase = repositoryPurchase.findAll(pageable);
 
-        Page<ProductPurchaseDTO> productPurchaseDTOS = purchase.map((x) -> {
-            ProductPurchaseDTO dto = ObjectMapper.parseObject(x, ProductPurchaseDTO.class);
+        Page<PurchaseDTO> purchaseDTOS = purchase.map((x) -> {
+            PurchaseDTO dto = ObjectMapper.parseObject(x, PurchaseDTO.class);
             Hateoas(dto);
             return dto;
         });
 
-        return assembler.toModel(productPurchaseDTOS);
+        return assembler.toModel(purchaseDTOS);
     }
 
-    public ProductPurchaseDTO findById(Long id) {
+    public PurchaseDTO findById(Long id) {
         logger.warn("Finding purchase");
 
-        ProductPurchaseDTO purchase = ObjectMapper.parseObject(repositoryPurchase.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found")),ProductPurchaseDTO.class);
+        PurchaseDTO purchase = ObjectMapper.parseObject(repositoryPurchase.findById(id).orElseThrow(() -> new EntityNotFoundException("ID field of Product not found")), PurchaseDTO.class);
 
         Hateoas(purchase);
 
@@ -166,14 +163,14 @@ public class PurchaseService {
         }
     }
 
-    private void Hateoas(ProductPurchaseDTO productPurchaseDTO) {
-        productPurchaseDTO.add(linkTo(methodOn(PurchaseController.class).create(ObjectMapper.parseObject(productPurchaseDTO, ProductPurchaseCreateDTO.class)))
+    private void Hateoas(PurchaseDTO purchaseDTO) {
+        purchaseDTO.add(linkTo(methodOn(PurchaseController.class).create(new ProductPurchaseCreateDTO()))
                 .withRel("create").withType("POST"));
-        productPurchaseDTO.add(linkTo(methodOn(PurchaseController.class).findById(productPurchaseDTO.getId()))
+        purchaseDTO.add(linkTo(methodOn(PurchaseController.class).findById(purchaseDTO.getId()))
                 .withSelfRel().withType(" GET"));
-        productPurchaseDTO.add(linkTo(methodOn(PurchaseController.class).findAll(0,12,"asc"))
+        purchaseDTO.add(linkTo(methodOn(PurchaseController.class).findAll(0,12,"asc"))
                 .withRel("findAll").withType("GET"));
-        productPurchaseDTO.add(linkTo(methodOn(PurchaseController.class).delete(productPurchaseDTO.getId()))
+        purchaseDTO.add(linkTo(methodOn(PurchaseController.class).delete(purchaseDTO.getId()))
                 .withRel("delete").withType("DELETE"));
     }
 }

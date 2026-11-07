@@ -2,6 +2,7 @@ package com.projeto.sol_de_verao.controllers;
 
 import com.projeto.sol_de_verao.controllers.docs.PurchaseControllerDocs;
 import com.projeto.sol_de_verao.dto.ProductPurchaseDTO;
+import com.projeto.sol_de_verao.dto.PurchaseDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
 import com.projeto.sol_de_verao.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +32,22 @@ public class PurchaseController implements PurchaseControllerDocs {
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<ProductPurchaseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<PurchaseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Override
-    public ResponseEntity<PagedModel<EntityModel<ProductPurchaseDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                                               @RequestParam(value = "size", defaultValue = "12") Integer size,
-                                                                               @RequestParam(value = "direction", defaultValue = "asc") String direction) {
+    public ResponseEntity<PagedModel<EntityModel<PurchaseDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                        @RequestParam(value = "size", defaultValue = "12") Integer size,
+                                                                        @RequestParam(value = "direction", defaultValue = "asc") String direction) {
         Pageable pageable = PageRequest.of(page,size, Sort.by(direction.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, "id"));
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll(pageable));
     }
 
+    @DeleteMapping(value = "/{id}")
     @Override
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

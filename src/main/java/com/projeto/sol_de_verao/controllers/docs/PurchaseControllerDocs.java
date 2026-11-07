@@ -1,6 +1,7 @@
 package com.projeto.sol_de_verao.controllers.docs;
 
 import com.projeto.sol_de_verao.dto.ProductPurchaseDTO;
+import com.projeto.sol_de_verao.dto.PurchaseDTO;
 import com.projeto.sol_de_verao.dto.createDTO.ProductPurchaseCreateDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -23,13 +24,13 @@ public interface PurchaseControllerDocs {
 
     @Operation(summary = "Find Purchase", description = "Find Purchase", tags = {"Purchase"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductPurchaseDTO.class))))})
-    ResponseEntity<ProductPurchaseDTO> findById(@PathVariable Long id);
+    ResponseEntity<PurchaseDTO> findById(@PathVariable Long id);
 
     @Operation(summary = "Find All Purchase", description = "Find All Purchase", tags = {"Purchase"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductPurchaseDTO.class))))})
-    ResponseEntity<PagedModel<EntityModel<ProductPurchaseDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                                        @RequestParam(value = "size", defaultValue = "12") Integer size,
-                                                                        @RequestParam(value = "direction", defaultValue = "asc") String direction);
+    ResponseEntity<PagedModel<EntityModel<PurchaseDTO>>> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                 @RequestParam(value = "size", defaultValue = "12") Integer size,
+                                                                 @RequestParam(value = "direction", defaultValue = "asc") String direction);
 
     @Operation(summary = "Delete Purchase", description = "Delete Purchase", tags = {"Purchase"}, responses = {
             @ApiResponse(description = "Success", responseCode = "204")})

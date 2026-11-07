@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "purchase")
+@Table(name = "purchases")
 public class Purchase implements Serializable {
 
     private static final long serialVersionUID = 1L;
