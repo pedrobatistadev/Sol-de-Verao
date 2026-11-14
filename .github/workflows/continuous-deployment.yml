@@ -38,4 +38,3 @@ jobs:
         
         docker push ${{ secrets.DOCKER_USERNAME }}/sol-de-verao:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/sol-de-verao:${{ github.sha }}
-
