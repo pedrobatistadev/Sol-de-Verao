@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="33763e01-8677-4bfb-af1a-65af34c967ef" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Exception" />
+        <option value="Class" />
+        <option value="Dockerfile" />
+        <option value="Docker Compose" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="2.1542322137929184" />
+      <entry key="MS500" value="3.9864737419102245" />
+      <entry key="S2" value="4.710507674626149" />
+      <entry key="S5" value="4.901324514132121" />
+      <entry key="S10" value="5.258739064147321" />
+      <entry key="S30" value="6.976845796780182" />
+      <entry key="S60" value="8.149881668667259" />
+      <entry key="M2" value="9.091714327050104" />
+      <entry key="M5" value="16.826019536122658" />
+      <entry key="M10" value="43.536615571066775" />
+      <entry key="M15" value="71.68182777260326" />
+      <entry key="M30" value="162.67132678097772" />
+      <entry key="H1" value="350.5888680102388" />
+      <entry key="H2" value="608.3845761145129" />
+      <entry key="H4" value="861.528743949436" />
+      <entry key="D1" value="1769.940562538715" />
+      <entry key="W1" value="3476.5418720011617" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="6.824157858922651E-113" />
+      <entry key="MS500" value="4.7425483258046367E-23" />
+      <entry key="S2" value="4.266699857708819E-6" />
+      <entry key="S5" value="0.010749533790796625" />
+      <entry key="S10" value="0.14655405782219064" />
+      <entry key="S30" value="0.8368330048252728" />
+      <entry key="S60" value="1.2936876176291798" />
+      <entry key="M2" value="1.6108916090683836" />
+      <entry key="M5" value="1.9905670410179357" />
+      <entry key="M10" value="2.664142084367695" />
+      <entry key="M15" value="3.354300507249227" />
+      <entry key="M30" value="5.847244850332819" />
+      <entry key="H1" value="13.279630524564611" />
+      <entry key="H2" value="33.99418819703707" />
+      <entry key="H4" value="77.86820086756123" />
+      <entry key="D1" value="593.6188950257449" />
+      <entry key="W1" value="1816.056758463198" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="2.1352422223472898" />
+      <entry key="MS500" value="3.97723751720814" />
+      <entry key="S2" value="4.7076261699674555" />
+      <entry key="S5" value="4.910323186707319" />
+      <entry key="S10" value="5.400928934948213" />
+      <entry key="S30" value="7.8062594593332175" />
+      <entry key="S60" value="9.437875868044133" />
+      <entry key="M2" value="10.699060412704261" />
+      <entry key="M5" value="18.81460765017313" />
+      <entry key="M10" value="46.19898537353197" />
+      <entry key="M15" value="75.03424849898781" />
+      <entry key="M30" value="168.51586643421797" />
+      <entry key="H1" value="363.86379806014907" />
+      <entry key="H2" value="642.3708763002935" />
+      <entry key="H4" value="939.3864936683084" />
+      <entry key="D1" value="2363.544118295497" />
+      <entry key="W1" value="5292.591911399988" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EV2Mz5QBMP3CldZRwX1y67cCTq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.All in sol-de-verao (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in sol-de-verao (2).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in sol-de-verao (3).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in sol-de-verao.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CustomerServiceTest.create.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Startup.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pedro/Documentos/sol-de-verao&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\pedro\OneDrive\Documentos\sol-de-verao\src\main\resources\db\migration" />
+      <recent name="C:\Users\pedro\OneDrive\Documentos\sol-de-verao\src\main\resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.projeto.sol_de_verao.controllers" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.projeto.sol_de_verao.unitTests" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.projeto.sol_de_verao.dto" />
+      <recent name="com.projeto.sol_de_verao.dto.createDTO" />
+      <recent name="com.projeto.sol_de_verao.dto.internal" />
+      <recent name="com.projeto.sol_de_verao.services" />
+      <recent name="com.projeto.sol_de_verao.controllers" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Startup" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="sol-de-verao" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.projeto.sol_de_verao.Startup" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.projeto.sol_de_verao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Startup" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-ac68fc9d2b05-intellij.indexing.shared.core-IU-263.7307.200" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="33763e01-8677-4bfb-af1a-65af34c967ef" name="Changes" comment="" />
+      <created>1780249371703</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1780249371703</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
