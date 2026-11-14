@@ -1,0 +1,52 @@
+services:
+  db:
+    image: mysql:9.1.0
+    restart: always
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: sol_de_verao
+    ports:
+      - 3308:3306
+    expose:
+      - 3306
+    networks:
+      - sol-de-verao-network
+
+  sol-de-verao:
+    image: pedrobatistadev/sol-de-verao
+    restart: always
+    build: ./
+    working_dir: /sol-de-verao
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3306/sol_de_verao?usetimezone=true&servertimezone=utc
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+    command: mvn spring-boot:run
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    networks:
+      - sol-de-verao-network
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - sol-de-verao-network
+
+volumes:
+  portainer_data:
+
+networks:
+  sol-de-verao-network:
+    driver: bridge
+
