@@ -1,3 +1,5 @@
+server:
+  port: 80
 spring:
   application:
     name: sol-de-verao
@@ -15,7 +17,7 @@ spring:
     open-in-view: false
 logging:
   level:
-    root: WARN
+    root: INFO
 spring-doc:
   paths-to-match: /**
   swagger-ui:

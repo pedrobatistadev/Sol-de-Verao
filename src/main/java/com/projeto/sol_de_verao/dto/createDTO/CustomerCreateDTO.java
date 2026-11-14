@@ -23,8 +23,6 @@ public class CustomerCreateDTO {
     @Size(min = 10, max = 11, message = "The phone number must have 10 or 11 characters.")
     private String phone;
 
-    private Boolean credit;
-
     @NotNull(message = "The type field cannot be empty.")
     private TypeCustomer type;
 
@@ -34,15 +32,6 @@ public class CustomerCreateDTO {
     private LocalDate dateBirth;
 
     public CustomerCreateDTO() {
-    }
-
-    public CustomerCreateDTO(String name, String cpf, String phone, Boolean credit, TypeCustomer type, LocalDate dateBirth) {
-        this.name = name;
-        this.cpf = cpf;
-        this.phone = phone;
-        this.credit = credit;
-        this.type = type;
-        this.dateBirth = dateBirth;
     }
 
     public CustomerCreateDTO(String name, String cpf, String phone, TypeCustomer type, LocalDate dateBirth) {
@@ -77,14 +66,6 @@ public class CustomerCreateDTO {
         this.phone = phone;
     }
 
-    public Boolean getCredit() {
-        return credit;
-    }
-
-    public void setCredit(Boolean credit) {
-        this.credit = credit;
-    }
-
     public TypeCustomer getType() {
         return type;
     }
@@ -104,11 +85,11 @@ public class CustomerCreateDTO {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CustomerCreateDTO that)) return false;
-        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && Objects.equals(credit, that.credit) && type == that.type && Objects.equals(dateBirth, that.dateBirth);
+        return Objects.equals(name, that.name) && Objects.equals(cpf, that.cpf) && Objects.equals(phone, that.phone) && type == that.type && Objects.equals(dateBirth, that.dateBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cpf, phone, credit, type, dateBirth);
+        return Objects.hash(name, cpf, phone, type, dateBirth);
     }
 }
