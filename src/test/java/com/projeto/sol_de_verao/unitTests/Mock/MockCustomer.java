@@ -49,7 +49,6 @@ public class MockCustomer {
         customerCreateDTO.setName("Isadora Alves");
         customerCreateDTO.setCpf("08781022808");
         customerCreateDTO.setPhone("44999313337");
-        customerCreateDTO.setCredit(true);
         customerCreateDTO.setType(TypeCustomer.CUSTOMER);
         customerCreateDTO.setDateBirth(LocalDate.parse("02/10/2006", dtf));
 
