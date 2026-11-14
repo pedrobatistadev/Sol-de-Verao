@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
-    @Query("SELECT I FROM Inventory AS I WHERE I.description LIKE LOWER(CONCAT('%', :name, '%'))")
+    @Query("SELECT i FROM Inventory AS i WHERE i.description LIKE LOWER(CONCAT('%', :name, '%'))")
     Optional<Inventory> findByName(@Param("name") String name);
 }
