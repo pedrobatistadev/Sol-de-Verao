@@ -4,7 +4,106 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33763e01-8677-4bfb-af1a-65af34c967ef" name="Changes" comment="" />
+    <list default="true" id="33763e01-8677-4bfb-af1a-65af34c967ef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/projeto/sol_de_verao/file/MediaTypes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/projeto/sol_de_verao/file/exporter/contract/ProductExporter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/projeto/sol_de_verao/file/exporter/factory/FileExporterFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/projeto/sol_de_verao/file/exporter/impl/XlsxExporter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/Startup.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/config/OpenAPIConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/CategoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/CustomerController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/EmployeeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/InventoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/ProductController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/PurchaseController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/SaleController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/CategoryControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/CustomerControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/EmployeeControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/InventoryControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/ProductControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/PurchaseControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/controllers/docs/SaleControllerDocs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/CategoryDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/CustomerDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/EmployeeDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/InventoryDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/PaymentDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/ProductDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/ProductPurchaseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/ProductQuantityPurchaseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/ProductQuantitySaleDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/ProductSaleDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/PurchaseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/SaleDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/CategoryCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/CustomerCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/EmployeeCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/InventoryCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/ProductCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/ProductPurchaseCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/createDTO/ProductSaleCreateDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/internal/CustomerDTORes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/dto/internal/EmployeeDTORes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/exception/CreditNotAvailableException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/exception/DatabaseIntegrationException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/exception/ExceptionResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/exception/InvalidPaymentMethodException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/exception/handler/CustomResponseHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/mapper/ObjectMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/AccountsPayable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/AccountsReceivable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Category.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Customer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Customers_Log.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Employee.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Inventory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/ProductPurchase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/ProductSale.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Product_Log.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Purchase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/Sale.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/enums/Actions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/enums/PaymentMethod.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/model/enums/TypeCustomer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/AccountsPayableRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/AccountsReceivableRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/CategoryRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/CustomerLogRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/CustomerRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/EmployeeRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/InventoryRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/ProductLogRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/ProductPurchaseRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/ProductRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/ProductSaleRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/PurchaseRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/repository/SaleRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/CategoryService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/CustomerService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/EmployeeService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/InventoryService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/ProductService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/PurchaseService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/projeto/sol_de_verao/services/SaleService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/migration/V1__Create_Tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/sol-de-verao-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/sol-de-verao-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.projeto.sol_de_verao.unitTests.CustomerServiceTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.projeto.sol_de_verao.unitTests.CustomerServiceTest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/projeto/sol_de_verao/unitTests/CustomerServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/projeto/sol_de_verao/unitTests/Mock/MockCustomer.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,12 +114,12 @@
       <list>
         <option value="Record" />
         <option value="Enum" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
         <option value="Exception" />
-        <option value="Class" />
         <option value="Dockerfile" />
         <option value="Docker Compose" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -40,61 +139,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.3708314638419787E-4" />
-      <entry key="MS500" value="0.42370880233181585" />
-      <entry key="S2" value="2.766923157417307" />
-      <entry key="S5" value="4.352645816483159" />
-      <entry key="S10" value="5.100510177482012" />
-      <entry key="S30" value="5.693481693115566" />
-      <entry key="S60" value="6.226938249314932" />
-      <entry key="M2" value="8.176237902846863" />
-      <entry key="M5" value="16.099342592915193" />
-      <entry key="M10" value="39.25117429277509" />
-      <entry key="M15" value="65.69691555718433" />
-      <entry key="M30" value="154.12866163215688" />
-      <entry key="H1" value="340.3480708870274" />
-      <entry key="H2" value="600.5184758951574" />
-      <entry key="H4" value="858.52087788087" />
-      <entry key="D1" value="1774.8125183937545" />
-      <entry key="W1" value="3484.383355517492" />
+      <entry key="MS100" value="1.3250853155993892E-8" />
+      <entry key="MS500" value="0.043849658800765356" />
+      <entry key="S2" value="1.0136560682048052" />
+      <entry key="S5" value="1.9394747594953916" />
+      <entry key="S10" value="2.4112856440767674" />
+      <entry key="S30" value="2.8242898594623242" />
+      <entry key="S60" value="3.5216276290861024" />
+      <entry key="M2" value="6.5986922512726345" />
+      <entry key="M5" value="18.29592842855815" />
+      <entry key="M10" value="35.653516567958086" />
+      <entry key="M15" value="51.66048145003598" />
+      <entry key="M30" value="104.83879740941148" />
+      <entry key="H1" value="246.02027171149547" />
+      <entry key="H2" value="508.98188595181307" />
+      <entry key="H4" value="818.9866683146145" />
+      <entry key="D1" value="1844.4127989279466" />
+      <entry key="W1" value="3598.8592302658008" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.0191148792102491" />
-      <entry key="MS500" value="1.5869133267658584" />
-      <entry key="S2" value="2.807630392357024" />
-      <entry key="S5" value="3.4279599488883563" />
-      <entry key="S10" value="3.6948496365328523" />
-      <entry key="S30" value="3.8972089084849824" />
-      <entry key="S60" value="4.062353304858473" />
-      <entry key="M2" value="4.650608800114881" />
-      <entry key="M5" value="6.03230590931986" />
-      <entry key="M10" value="7.331487981541353" />
-      <entry key="M15" value="8.279118372829513" />
-      <entry key="M30" value="11.015879605658423" />
-      <entry key="H1" value="18.44798244892993" />
-      <entry key="H2" value="39.001157610069974" />
-      <entry key="H4" value="82.75886213435915" />
-      <entry key="D1" value="598.2321054057119" />
-      <entry key="W1" value="1821.4514415214405" />
+      <entry key="MS100" value="1.0000799800661535" />
+      <entry key="MS500" value="1.1515641023827172" />
+      <entry key="S2" value="1.6239489927316422" />
+      <entry key="S5" value="1.828055860460558" />
+      <entry key="S10" value="1.9099766319742009" />
+      <entry key="S30" value="2.004480336875421" />
+      <entry key="S60" value="2.615852067097865" />
+      <entry key="M2" value="5.429286419862648" />
+      <entry key="M5" value="15.395822328248483" />
+      <entry key="M10" value="28.205584202804378" />
+      <entry key="M15" value="37.564993094011214" />
+      <entry key="M30" value="55.16377996709724" />
+      <entry key="H1" value="73.77208385331942" />
+      <entry key="H2" value="99.71312710792938" />
+      <entry key="H4" value="145.93624521700374" />
+      <entry key="D1" value="660.8641773175476" />
+      <entry key="W1" value="1896.2879568374217" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.27442661651736777" />
-      <entry key="MS500" value="1.525472120406874" />
-      <entry key="S2" value="5.297206811035233" />
-      <entry key="S5" value="7.638064353728926" />
-      <entry key="S10" value="8.717230964872947" />
-      <entry key="S30" value="9.562898817030044" />
-      <entry key="S60" value="10.274591524991072" />
-      <entry key="M2" value="12.818018760057354" />
-      <entry key="M5" value="22.126628104250155" />
-      <entry key="M10" value="46.579160082108615" />
-      <entry key="M15" value="73.9729772196409" />
-      <entry key="M30" value="165.14130992909992" />
-      <entry key="H1" value="358.7911927153796" />
-      <entry key="H2" value="639.5117526206824" />
-      <entry key="H4" value="941.2693281473669" />
-      <entry key="D1" value="2373.0293025091983" />
-      <entry key="W1" value="5305.82807767575" />
+      <entry key="MS100" value="0.023357104941470783" />
+      <entry key="MS500" value="0.5524078402794318" />
+      <entry key="S2" value="2.2779745792462065" />
+      <entry key="S5" value="3.5836576170550734" />
+      <entry key="S10" value="4.2207796254244" />
+      <entry key="S30" value="4.790329915545853" />
+      <entry key="S60" value="6.093798553650474" />
+      <entry key="M2" value="11.950315585170388" />
+      <entry key="M5" value="33.58727533434381" />
+      <entry key="M10" value="63.760526503488826" />
+      <entry key="M15" value="89.137312406203" />
+      <entry key="M30" value="159.93849397142682" />
+      <entry key="H1" value="319.75075910261637" />
+      <entry key="H2" value="608.6675716810635" />
+      <entry key="H4" value="964.902620933882" />
+      <entry key="D1" value="2505.2600967152907" />
+      <entry key="W1" value="5495.140200816602" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{

@@ -39,6 +39,10 @@ C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\ex
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\exception\ExceptionResponse.java
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\exception\handler\CustomResponseHandler.java
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\exception\InvalidPaymentMethodException.java
+C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\file\exporter\contract\ProductExporter.java
+C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\file\exporter\factory\FileExporterFactory.java
+C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\file\exporter\impl\XlsxExporter.java
+C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\file\MediaTypes.java
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\mapper\ObjectMapper.java
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\model\AccountsPayable.java
 C:\Users\pedro\Documentos\sol-de-verao\src\main\java\com\projeto\sol_de_verao\model\AccountsReceivable.java

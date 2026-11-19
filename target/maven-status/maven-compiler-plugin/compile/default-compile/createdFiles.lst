@@ -4,6 +4,7 @@ com\projeto\sol_de_verao\services\InventoryService.class
 com\projeto\sol_de_verao\services\ProductService.class
 com\projeto\sol_de_verao\exception\CreditNotAvailableException.class
 com\projeto\sol_de_verao\services\PurchaseService.class
+com\projeto\sol_de_verao\file\exporter\impl\XlsxExporter.class
 com\projeto\sol_de_verao\dto\createDTO\CategoryCreateDTO.class
 com\projeto\sol_de_verao\model\ProductPurchase.class
 com\projeto\sol_de_verao\repository\ProductLogRepository.class
@@ -20,6 +21,7 @@ com\projeto\sol_de_verao\controllers\CustomerController.class
 com\projeto\sol_de_verao\dto\SaleDTO.class
 com\projeto\sol_de_verao\model\enums\TypeCustomer.class
 com\projeto\sol_de_verao\repository\InventoryRepository.class
+com\projeto\sol_de_verao\file\exporter\contract\ProductExporter.class
 com\projeto\sol_de_verao\Startup.class
 com\projeto\sol_de_verao\model\Product_Log.class
 com\projeto\sol_de_verao\dto\internal\EmployeeDTORes.class
@@ -69,9 +71,11 @@ com\projeto\sol_de_verao\dto\ProductQuantitySaleDTO.class
 com\projeto\sol_de_verao\model\Product.class
 com\projeto\sol_de_verao\dto\CustomerDTO.class
 com\projeto\sol_de_verao\controllers\SaleController.class
+com\projeto\sol_de_verao\file\MediaTypes.class
 com\projeto\sol_de_verao\controllers\EmployeeController.class
 com\projeto\sol_de_verao\dto\ProductSaleDTO.class
 com\projeto\sol_de_verao\controllers\docs\CustomerControllerDocs.class
+com\projeto\sol_de_verao\file\exporter\factory\FileExporterFactory.class
 com\projeto\sol_de_verao\repository\ProductPurchaseRepository.class
 com\projeto\sol_de_verao\dto\createDTO\ProductSaleCreateDTO.class
 com\projeto\sol_de_verao\controllers\docs\InventoryControllerDocs.class
